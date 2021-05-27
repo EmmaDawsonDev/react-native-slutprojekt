@@ -4,7 +4,7 @@ import { Text, SafeAreaView, Button } from "react-native";
 const ClientDash = (props) => {
   return (
     <SafeAreaView>
-      <Text>This is an edit screen</Text>
+      <Text>This is the client dashboard</Text>
       <Button
         onPress={() => {
           props.navigation.navigate("Profile");

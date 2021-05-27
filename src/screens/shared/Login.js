@@ -4,7 +4,7 @@ import { SafeAreaView, Text, Button } from "react-native";
 const LoginScreen = (props) => {
   const [role, setRole] = useState("worker");
   const pressHandler = () => {
-    if (role === "client") {
+    if (role === "worker") {
       props.navigation.navigate("WorkerDash");
     } else {
       props.navigation.navigate("ClientDash");
