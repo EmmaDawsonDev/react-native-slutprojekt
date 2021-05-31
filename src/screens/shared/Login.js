@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, Text, Button } from "react-native";
+import AuthContext from '../../store/AuthContext'
 
 const LoginScreen = (props) => {
-  const [role, setRole] = useState("worker");
+  const { signIn } = useContext(AuthContext)
+
+  // const [role, setRole] = useState("worker");
   const pressHandler = () => {
-    if (role === "worker") {
-      props.navigation.navigate("WorkerDash");
-    } else {
-      props.navigation.navigate("ClientDash");
-    }
+    signIn({ email: 'client1@yahoo.com', password: 'Grillkorv' })
   };
 
   return (
