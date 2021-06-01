@@ -1,5 +1,7 @@
-import React, { useReducer, useMemo, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
+
+import { login } from "../api";
 
 const saveUser = async () => {
   await SecureStore.setItemAsync("user", value);
@@ -65,18 +67,12 @@ export const AuthContextProvider = (props) => {
   const signIn = async (data) => {
     console.log("running signIn", authState);
     // 1. skicka email och password till backend
-    // << kod här >>
+    const user = await login(data);
+    console.log("I am the user", user);
     // 2. Få tillbaka token och logga in:
     authDispatch({
       type: "SIGN_IN",
-      user: {
-        id: 10,
-        name: "NewClient",
-        email: "newclient@example.com",
-        role: "client",
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5ld2NsaWVudEBleGFtcGxlLmNvbSIsImlkIjoxMCwicm9sZSI6ImNsaWVudCIsImlhdCI6MTYyMTQ5NTM3OSwiZXhwIjoxNjIxNDk4OTc5fQ.97rZTy4XQvBcUHK2wPrV5uzIeZ5w3wvN6VHp2oAEbHY",
-      },
+      user: user,
     });
     console.log("authState:");
     console.log(authState);
