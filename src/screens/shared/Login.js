@@ -100,14 +100,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 40,
 
-  //   // Works only on IOS
-  //   shadowColor: 'green',
-  //   shadowOffset:{ width: 0, height:2 },
-  //   shadowRadius: 6,
-  //   shadowOpacity: 0.26,
-
-  // // Works only on Android
-  //   elevation: 5
   },
   buttonText:{
     fontSize: 20
