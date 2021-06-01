@@ -1,10 +1,19 @@
-import React from "react";
-import { SafeAreaView, Text } from 'react-native'
+import React, {useContext} from "react";
+import { SafeAreaView, Text, Button } from 'react-native'
+import AuthContext from "../../store/AuthContext";
 
 const ProfileScreen = () => {
+  const { signOut, user } = useContext(AuthContext);
   return (
     <SafeAreaView>
-      <Text>This is the profile screen</Text>
+      <Text>Name: {user.name}</Text>
+      <Text>Email: {user.email}</Text>
+      <Button
+        onPress={() => {
+          signOut();
+        }}
+        title="sign out"
+      />
     </SafeAreaView>
   );
 };

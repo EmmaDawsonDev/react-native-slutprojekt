@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { SafeAreaView, Text, TextInput, Button } from "react-native";
+import { SafeAreaView, Text, TextInput, Button, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
 
 const LoginScreen = (props) => {
