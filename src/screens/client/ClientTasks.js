@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView, Text, Button, FlatList } from "react-native";
+import { SafeAreaView, Text, Button, FlatList, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import {getTasks} from "../../api"
+import TaskButton from '../../components/TaskButton'
+import Color from "../../constants/color"
 
 const ClientTasksScreen = (props) => {
   const [tasks, setTasks] = useState([ ])
@@ -18,13 +20,12 @@ const ClientTasksScreen = (props) => {
   
   const renderTask = ({item}) => {
     return (
-    <Text onPress={() => props.navigation.navigate("ClientSingleTask", {task:item})}> 
-      {item.title} 
-    </Text>)
+      <TaskButton task={item} onPress={() => props.navigation.navigate("ClientSingleTask", {task:item})} /> 
+    )
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.screen}>
       <FlatList
         keyExtractor={task => task.id}
         data={tasks}
@@ -33,5 +34,14 @@ const ClientTasksScreen = (props) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  screen:{
+    flex:1,
+    // alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.primaryDark
+  },
+})
 
 export default ClientTasksScreen;
