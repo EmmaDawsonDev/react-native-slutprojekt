@@ -1,25 +1,24 @@
 import axios from "axios";
 
-// const API = axios.create({
-//   baseURL: "http://10.0.2.2:5000/api/v1",
-// });
+const HOST = '192.168.10.169'
 
 const API = axios.create({
-  baseURL: "http://192.168.0.48:5000/api/v1",
-});
-
-// 192.168.0.48.
+  baseURL: `http://${HOST}:5000/api/v1`,
+})
 
 export const login = async ({ email, password }) => {
   try {
+    console.log('IN login');
     const response = await API.post("/authenticate", {
       email,
       password,
     });
 
-    if(response.status === 200){
+    console.log(`response: ${response}`);
+
+    if (response.status === 200) {
       return response.data
-    }else{
+    } else {
       throw new Error(response)
     }
 
@@ -31,14 +30,14 @@ export const login = async ({ email, password }) => {
 export const getTasks = async (token) => {
   try {
     const response = await API.get("/tasks", {
-      headers:{
+      headers: {
         Authorization: `Bearer ${token}`
       }
     })
 
-    if(response.status === 200){
+    if (response.status === 200) {
       return response.data
-    }else{
+    } else {
       throw new Error(response)
     }
 
