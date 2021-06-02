@@ -27,9 +27,16 @@ export const login = async ({ email, password }) => {
   }
 };
 
-export const getTasks = async (token) => {
+export const getTasks = async (token, filter, search) => {
+  let query = '?'
+  if (filter) {
+    query += `filter=${filter}&`
+  }
+  if (search) {
+    query += `search=${search}&`
+  }
   try {
-    const response = await API.get("/tasks", {
+    const response = await API.get(`/tasks${query}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
