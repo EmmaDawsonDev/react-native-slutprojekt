@@ -36,7 +36,6 @@ const ClientTasksScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    // alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Color.primaryDark
   },

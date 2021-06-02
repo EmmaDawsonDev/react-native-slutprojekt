@@ -23,7 +23,7 @@ const AuthNavigation = () => {
   return !authContext.user ? (
     <LoginScreen />
   ) : (
-    <NavigationContainer>
+    <NavigationContainer  >
       {authContext.user.role === "worker" ? (
         <WorkerDashTabs />
       ) : (
