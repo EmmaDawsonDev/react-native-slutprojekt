@@ -1,26 +1,24 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SafeAreaView, Text, Button, FlatList, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
-import {getTasks} from "../../api"
+import { getTasks } from "../../api"
 import TaskButton from '../../components/TaskButton'
 import Color from "../../constants/color"
 
 const ClientTasksScreen = (props) => {
-  const [tasks, setTasks] = useState([ ])
+  const [tasks, setTasks] = useState([])
 
   const { user } = useContext(AuthContext);
-  useEffect( () => {
+  useEffect(() => {
     (async () => {
       const response = await getTasks(user.token)
-      console.log(response);
-      setTasks(response.tasks)
-      
+      setTasks([...response.tasks])
     })()
-  },[])
-  
-  const renderTask = ({item}) => {
+  }, [])
+
+  const renderTask = ({ item }) => {
     return (
-      <TaskButton task={item} onPress={() => props.navigation.navigate("ClientSingleTask", {task:item})} /> 
+      <TaskButton task={item} onPress={() => props.navigation.navigate("ClientSingleTask", { task: item })} />
     )
   }
 
@@ -36,8 +34,8 @@ const ClientTasksScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  screen:{
-    flex:1,
+  screen: {
+    flex: 1,
     // alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Color.primaryDark
