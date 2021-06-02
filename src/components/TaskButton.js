@@ -1,12 +1,12 @@
 import React from 'react'
-import {TouchableOpacity, Text, StyleSheet} from 'react-native'
+import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Color from "../constants/color"
 import AuthContext from '../store/AuthContext'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const TaskButton = props =>{
+const TaskButton = props => {
     const styles = StyleSheet.create({
-        taskContainer:{
+        taskContainer: {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -19,17 +19,17 @@ const TaskButton = props =>{
             borderLeftColor: props.task.done ? Color.pelleGreen : Color.red, // TESTA
             marginTop: 30
         },
-        taskContent:{
+        taskContent: {
             display: 'flex',
             // textAlign: 'left',
             // justifyContent: 'center',
             color: 'white',
             fontSize: 24,
-            
+
         }
     })
-    return(
-        <TouchableOpacity style={styles.taskContainer}>
+    return (
+        <TouchableOpacity onPress={props.onPress} style={styles.taskContainer}>
             <Text style={styles.taskContent}>
                 {props.task.title}
             </Text>
