@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Platform, Picker } from 'react-native'
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import Color from "../constants/color"
 import { getTasks } from '../api'
@@ -19,7 +19,7 @@ const TaskFilter = ({ setTasks }) => {
   return (
     <View style={styles.wrapper}>
       <TextInput style={styles.searchInput} placeholder="Search name..." />
-      <RNPickerSelect style={{ inputIOS: styles.searchInput }}
+      <RNPickerSelect style={{ inputIOS: styles.searchInput, inputAndroid: styles.searchInput }}
         placeholder={{}}
         onValueChange={(value) => setFilter(value)}
         items={[
@@ -40,12 +40,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 10
   },
   searchInput: {
-    backgroundColor: Color.grey,
-    height: 50,
-    borderRadius: 6,
-    paddingLeft: 10
-  },
-  inputIOS: {
     backgroundColor: Color.grey,
     height: 50,
     borderRadius: 6,
