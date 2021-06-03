@@ -4,6 +4,7 @@ import AuthContext from "../../store/AuthContext";
 import { getTasks } from "../../api"
 import TaskButton from '../../components/TaskButton'
 import Color from "../../constants/color"
+import BaseContainer from "../../components/BaseComponents/BaseContainer"
 
 const ClientTasksScreen = (props) => {
   const [tasks, setTasks] = useState([])
@@ -23,13 +24,13 @@ const ClientTasksScreen = (props) => {
   }
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <BaseContainer>
       <FlatList
         keyExtractor={task => task.id}
         data={tasks}
         renderItem={renderTask}
       />
-    </SafeAreaView>
+    </BaseContainer>
   );
 };
 

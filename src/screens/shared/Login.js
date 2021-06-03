@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, TextInput, Button, StyleSheet, TouchableOpaci
 import AuthContext from "../../store/AuthContext";
 import Color from "../../constants/color"
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import BaseContainer from "../../components/BaseComponents/BaseContainer"
 
 // const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
@@ -18,7 +19,7 @@ const LoginScreen = (props) => {
   };
   
   return (
-    <SafeAreaView style={styles.screen}>
+    <BaseContainer style={styles.screen}>
       <View style={styles.keyWrapper}>
         <Icon name="key" size={30} color={Color.orange} />
       </View>
@@ -53,16 +54,14 @@ const LoginScreen = (props) => {
       <TouchableOpacity style={styles.button} onPress={pressHandler}>
         <Text style={styles.buttonText} >LOGIN</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </BaseContainer>
   );
 };
 
 const styles = StyleSheet.create({
   screen:{
-    flex:1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Color.primaryDark
+    justifyContent: 'center'
   },
   input:{
     backgroundColor: "#dedede",

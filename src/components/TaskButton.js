@@ -16,13 +16,23 @@ const TaskButton = props => {
             alignSelf: 'center',
             backgroundColor: Color.secondaryDark,
             borderLeftWidth: 10,
-            borderLeftColor: props.task.done ? Color.pelleGreen : Color.red, // TESTA
-            marginTop: 30
+            borderLeftColor: props.task.done ? Color.pelleGreen : Color.red,
+
+            marginTop: 20,
+            //-- Border and Shadow ---//
+            borderTopRightRadius: 8,
+            borderBottomRightRadius: 8,
+            // Works only on IOS
+            shadowColor: 'black',
+            shadowOffset:{ width: 0, height:2 },
+            shadowRadius: 6,
+            shadowOpacity: 0.26,
+
+            // Works only on Android
+            elevation: 5
         },
         taskContent: {
             display: 'flex',
-            // textAlign: 'left',
-            // justifyContent: 'center',
             color: 'white',
             fontSize: 24,
 
