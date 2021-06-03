@@ -1,41 +1,43 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SafeAreaView, FlatList, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
-import { getTasks } from "../../api"
-import TaskButton from '../../components/TaskButton'
-import TaskFilter from '../../components/TaskFilter'
-import Color from "../../constants/color"
-import BaseContainer from "../../components/BaseComponents/BaseContainer"
+import { getTasks } from "../../api";
+import TaskButton from "../../components/TaskButton";
+import TaskFilter from "../../components/TaskFilter";
+import Color from "../../constants/color";
+import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
 const WorkerTasksScreen = (props) => {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
-      const response = await getTasks(user.token)
-      setTasks(response.tasks)
-    })()
-  }, [])
+      const response = await getTasks(user.token);
+      setTasks(response.tasks);
+    })();
+  }, []);
 
   const renderTask = ({ item }) => {
     return (
       <TaskButton
         task={item}
-        onPress={() => props.navigation.navigate("WorkerSingleTask", { task: item })}
+        onPress={() =>
+          props.navigation.navigate("WorkerSingleTask", { task: item })
+        }
       />
-    )
-  }
+    );
+  };
 
   const handleFilterTasks = (filteredTasks) => {
-    setTasks(filteredTasks)
-  }
+    setTasks(filteredTasks);
+  };
 
   return (
-    <BaseContainer >
+    <BaseContainer>
       <TaskFilter setTasks={handleFilterTasks} />
       <FlatList
-        keyExtractor={task => task.id}
+        keyExtractor={(task) => String(task.id)}
         data={tasks}
         renderItem={renderTask}
       />
@@ -47,4 +49,4 @@ const WorkerTasksScreen = (props) => {
 
 // })
 
-export default WorkerTasksScreen
+export default WorkerTasksScreen;

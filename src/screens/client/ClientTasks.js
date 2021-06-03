@@ -30,13 +30,13 @@ const ClientTasksScreen = (props) => {
 
   return (
     <BaseContainer>
-      {tasks.length && (
-        <FlatList
-          keyExtractor={(task) => task.id}
-          data={tasks}
-          renderItem={renderTask}
-        />
-      )}
+      {/* {tasks.length && ( */}
+      <FlatList
+        keyExtractor={(task) => String(task.id)}
+        data={tasks}
+        renderItem={renderTask}
+      />
+      {/* )} */}
     </BaseContainer>
   );
 };
