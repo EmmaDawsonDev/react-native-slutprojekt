@@ -13,7 +13,7 @@ const WorkerTasksScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      const response = await getTasks(user.token);
+      const response = await getTasks();
       setTasks(response.tasks);
     })();
   }, []);

@@ -18,6 +18,9 @@ export const login = async ({ email, password }) => {
     console.log(`response: ${response}`);
 
     if (response.status === 200) {
+      API.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
       return response.data;
     } else {
       throw new Error(response);
@@ -36,13 +39,25 @@ export const getTasks = async (token, filter, search) => {
     query += `search=${search}&`;
   }
   try {
-    const response = await API.get(`/tasks${query}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await API.get(`/tasks${query}`);
 
     if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(response);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUsers = async () => {
+  try {
+    console.log("I am in index api file");
+    const response = await API.get("/users");
+
+    if (response.status === 200) {
+      console.log(response.data);
       return response.data;
     } else {
       throw new Error(response);

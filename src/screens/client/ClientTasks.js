@@ -12,7 +12,7 @@ const ClientTasksScreen = (props) => {
   const { user } = useContext(AuthContext);
   useEffect(() => {
     (async () => {
-      const response = await getTasks(user.token);
+      const response = await getTasks();
       setTasks([...response.tasks]);
     })();
   }, []);

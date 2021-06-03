@@ -65,17 +65,14 @@ export const AuthContextProvider = (props) => {
   }, []);
 
   const signIn = async (data) => {
-    console.log("running signIn", authState);
     // 1. skicka email och password till backend
     const user = await login(data);
-    console.log("I am the user", user);
+
     // 2. Få tillbaka token och logga in:
     authDispatch({
       type: "SIGN_IN",
       user: user,
     });
-    console.log("authState:");
-    console.log(authState);
   };
 
   const signOut = () => {

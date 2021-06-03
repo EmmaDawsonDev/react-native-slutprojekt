@@ -1,17 +1,52 @@
-import React from "react";
-import { SafeAreaView, Text, Button } from 'react-native'
-import BaseContainer from "../../components/BaseComponents/BaseContainer"
+import React, { useContext, useState, useEffect } from "react";
+import { SafeAreaView, FlatList, StyleSheet, Text } from "react-native";
+import AuthContext from "../../store/AuthContext";
+import { getTasks } from "../../api";
+import TaskButton from "../../components/TaskButton";
+import TaskFilter from "../../components/TaskFilter";
+import Color from "../../constants/color";
+import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
-const Users = (props) => {
+const UsersScreen = (props) => {
+  const [users, setUsers] = useState([]);
+  // const { user } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log("User screen");
+  //     const response = await getUsers();
+  //     setUsers(response.users);
+  //   })();
+  // }, []);
+
+  // const renderUser = ({ item }) => {
+  //   return (
+  //     <TaskButton
+  //       user={item}
+  //       onPress={() => props.navigation.navigate("SingleUser", { user: item })}
+  //     />
+  //   );
+  // };
+
+  // const handleFilterTasks = (filteredTasks) => {
+  //   setTasks(filteredTasks);
+  // };
+
   return (
     <BaseContainer>
-      <Text>USERS</Text>
-      <Text>Here we can search and filter</Text>
-      <Button onPress={() => props.navigation.navigate('SingleUser')} title="Single User"></Button>
-      <Button onPress={() => props.navigation.navigate('SingleUser')} title="Single User TWO"></Button>
-      <Button onPress={() => props.navigation.navigate('SingleUser')} title="Single User THREE"></Button>
+      {/* <TaskFilter setTasks={handleFilterTasks} /> */}
+      {/* <FlatList
+        keyExtractor={(user) => String(user.id)}
+        data={users}
+        renderItem={renderUser}
+      /> */}
+      <Text>I am the user screen</Text>
     </BaseContainer>
   );
 };
 
-export default Users;
+// const styles = StyleSheet.create({
+
+// })
+
+export default UsersScreen;
