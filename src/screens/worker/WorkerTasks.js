@@ -5,6 +5,7 @@ import { getTasks } from "../../api"
 import TaskButton from '../../components/TaskButton'
 import TaskFilter from '../../components/TaskFilter'
 import Color from "../../constants/color"
+import BaseContainer from "../../components/BaseComponents/BaseContainer"
 
 const WorkerTasksScreen = (props) => {
   const [tasks, setTasks] = useState([])
@@ -26,24 +27,24 @@ const WorkerTasksScreen = (props) => {
     )
   }
 
+  const handleFilterTasks = (filteredTasks) => {
+    setTasks(filteredTasks)
+  }
+
   return (
-    <SafeAreaView style={styles.screen}>
-      <TaskFilter setTasks={setTasks} />
+    <BaseContainer >
+      <TaskFilter setTasks={handleFilterTasks} />
       <FlatList
         keyExtractor={task => task.id}
         data={tasks}
         renderItem={renderTask}
       />
-    </SafeAreaView>
+    </BaseContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: Color.primaryDark
-  },
-})
+// const styles = StyleSheet.create({
+
+// })
 
 export default WorkerTasksScreen
