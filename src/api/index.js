@@ -7,6 +7,12 @@ const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
 });
 
+export const setDefaultHeaders = token => {
+  API.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${token}`;
+}
+
 export const login = async ({ email, password }) => {
   try {
     const response = await API.post("/authenticate", {
@@ -15,9 +21,7 @@ export const login = async ({ email, password }) => {
     });
 
     if (response.status === 200) {
-      API.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
+      setDefaultHeaders(response.data.token)
       return response.data;
     } else {
       throw new Error(response);
@@ -28,14 +32,14 @@ export const login = async ({ email, password }) => {
 };
 
 export const getTasks = async (filter, search) => {
-  let query = "?";
-  if (filter) {
-    query += `filter=${filter}&`;
-  }
-  if (search) {
-    query += `search=${search}&`;
-  }
   try {
+    let query = "?";
+    if (filter) {
+      query += `filter=${filter}&`;
+    }
+    if (search) {
+      query += `search=${search}&`;
+    }
     const response = await API.get(`/tasks${query}`);
 
     if (response.status === 200) {

@@ -1,22 +1,25 @@
 import React, { useReducer, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
+import { login, setDefaultHeaders } from "../api";
 
-import { login } from "../api";
-
-const saveUser = async () => {
+const saveUser = async value => {
   await SecureStore.setItemAsync("user", value);
 };
 
 const getUser = async () => {
   const user = await SecureStore.getItemAsync("user");
-  return user;
+  return JSON.parse(user);
 };
+
+const clearUser = async () => {
+  await SecureStore.deleteItemAsync('user')
+}
 
 const AuthContext = React.createContext({
   user: null,
   isLoading: false,
-  signIn: (data) => {},
-  signOut: () => {},
+  signIn: (data) => { },
+  signOut: () => { },
 });
 
 export const AuthContextProvider = (props) => {
@@ -41,6 +44,7 @@ export const AuthContextProvider = (props) => {
           return {
             ...prevState,
             user: null,
+            isLoading: true
           };
       }
     },
@@ -56,7 +60,9 @@ export const AuthContextProvider = (props) => {
         let user = await getUser();
 
         if (user) {
+          console.log('found user!');
           authDispatch({ type: "SET_USER", user });
+          setDefaultHeaders(user.token)
         }
       } catch (error) {
         console.log(error);
@@ -67,7 +73,7 @@ export const AuthContextProvider = (props) => {
   const signIn = async (data) => {
     // 1. skicka email och password till backend
     const user = await login(data);
-
+    await saveUser(JSON.stringify(user))
     // 2. Få tillbaka token och logga in:
     authDispatch({
       type: "SIGN_IN",
@@ -77,6 +83,7 @@ export const AuthContextProvider = (props) => {
 
   const signOut = () => {
     authDispatch({ type: "SIGN_OUT" });
+    clearUser()
   };
 
   const authContext = {

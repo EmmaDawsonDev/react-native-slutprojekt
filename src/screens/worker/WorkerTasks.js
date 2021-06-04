@@ -1,16 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView, FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import { getTasks } from "../../api";
 import ListCard from "../../components/ListCard";
 import TaskFilter from "../../components/TaskFilter";
-import Color from "../../constants/color";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
 const WorkerTasksScreen = (props) => {
   const [tasks, setTasks] = useState([]);
-  const { user } = useContext(AuthContext);
-
+  const { isLoading } = useContext(AuthContext);
+  console.log(isLoading);
   useEffect(() => {
     (async () => {
       const response = await getTasks();
@@ -36,17 +35,17 @@ const WorkerTasksScreen = (props) => {
   return (
     <BaseContainer>
       <TaskFilter setTasks={handleFilterTasks} />
-      <FlatList
-        keyExtractor={(task) => String(task.id)}
-        data={tasks}
-        renderItem={renderTask}
-      />
+      {isLoading ? (
+        <Text>LOADING...</Text>
+      ) : (
+        <FlatList
+          keyExtractor={(task) => String(task.id)}
+          data={tasks}
+          renderItem={renderTask}
+        />
+      )}
     </BaseContainer>
   );
 };
-
-// const styles = StyleSheet.create({
-
-// })
 
 export default WorkerTasksScreen;
