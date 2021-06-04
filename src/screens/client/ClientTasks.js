@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { SafeAreaView, Text, Button, FlatList, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import { getTasks } from "../../api";
-import TaskButton from "../../components/TaskButton";
+import ListCard from "../../components/ListCard";
 import Color from "../../constants/color";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
@@ -19,7 +19,7 @@ const ClientTasksScreen = (props) => {
 
   const renderTask = ({ item }) => {
     return (
-      <TaskButton
+      <ListCard
         task={item}
         onPress={() =>
           props.navigation.navigate("ClientSingleTask", { task: item })

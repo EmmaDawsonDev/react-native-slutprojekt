@@ -1,12 +1,11 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Color from "../constants/color";
-import AuthContext from "../store/AuthContext";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-const TaskButton = (props) => {
+const ListCard = (props) => {
   const styles = StyleSheet.create({
-    taskContainer: {
+    cardContainer: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -16,8 +15,7 @@ const TaskButton = (props) => {
       alignSelf: "center",
       backgroundColor: Color.secondaryDark,
       borderLeftWidth: 10,
-      borderLeftColor: props.task.done ? Color.pelleGreen : Color.red,
-
+      borderLeftColor: props.task ? props.task.done ? Color.pelleGreen : Color.red : Color.blue,
       marginTop: 20,
       //-- Border and Shadow ---//
       borderTopRightRadius: 8,
@@ -31,23 +29,23 @@ const TaskButton = (props) => {
       // Works only on Android
       elevation: 5,
     },
-    taskContent: {
+    cardContent: {
       display: "flex",
       color: "white",
       fontSize: 24,
     },
   });
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.taskContainer}>
+    <TouchableOpacity onPress={props.onPress} style={styles.cardContainer}>
       {props.task ? (
-        <Text style={styles.taskContent}>{props.task.title}</Text>
+        <Text style={styles.cardContent}>{props.task.title}</Text>
       ) : null}
       {props.user ? (
-        <Text style={styles.taskContent}>{props.user.name}</Text>
+        <Text style={styles.cardContent}>{props.user.name}</Text>
       ) : null}
       <Icon name="caret-right" size={36} color="white" />
     </TouchableOpacity>
   );
 };
 
-export default TaskButton;
+export default ListCard;

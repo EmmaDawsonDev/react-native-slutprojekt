@@ -6,7 +6,6 @@ import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
 
 const ClientSingleTask = ({ route }) => {
-  console.log(route.params.task);
   const task = route.params.task;
   return (
     <BaseContainer>

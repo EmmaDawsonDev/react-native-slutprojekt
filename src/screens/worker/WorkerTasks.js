@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { SafeAreaView, FlatList, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import { getTasks } from "../../api";
-import TaskButton from "../../components/TaskButton";
+import ListCard from "../../components/ListCard";
 import TaskFilter from "../../components/TaskFilter";
 import Color from "../../constants/color";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
@@ -20,7 +20,7 @@ const WorkerTasksScreen = (props) => {
 
   const renderTask = ({ item }) => {
     return (
-      <TaskButton
+      <ListCard
         task={item}
         onPress={() =>
           props.navigation.navigate("WorkerSingleTask", { task: item })
