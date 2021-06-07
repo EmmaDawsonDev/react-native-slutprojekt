@@ -1,15 +1,25 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Modal, Text, Pressable } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
+import StatusModal from "../../components/Modals/StatusModal";
 
 const WorkerSingleTask = ({ route }) => {
   console.log(route.params.task);
   const task = route.params.task;
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <BaseContainer>
+      <StatusModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        task={task}
+      />
+
       <View style={styles.imagePlaceholder}></View>
       <BaseFlexRow>
         <BaseCard
@@ -26,6 +36,7 @@ const WorkerSingleTask = ({ route }) => {
           borderColor={task.done ? Color.pelleGreen : Color.red}
           onPress={() => {
             console.log("task status");
+            setModalVisible(true);
           }}
         ></BaseCard>
       </BaseFlexRow>

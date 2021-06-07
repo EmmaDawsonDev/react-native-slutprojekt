@@ -1,18 +1,16 @@
 import axios from "axios";
 
 // const HOST = '192.168.10.169' // Pelle
-const HOST = '192.168.0.48' //Renzo
-// const HOST = "10.0.2.2";
+//const HOST = '192.168.0.48' //Renzo
+const HOST = "10.0.2.2";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
 });
 
-export const setDefaultHeaders = token => {
-  API.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${token}`;
-}
+export const setDefaultHeaders = (token) => {
+  API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
 
 export const login = async ({ email, password }) => {
   try {
@@ -22,7 +20,7 @@ export const login = async ({ email, password }) => {
     });
 
     if (response.status === 200) {
-      setDefaultHeaders(response.data.token)
+      setDefaultHeaders(response.data.token);
       return response.data;
     } else {
       return false;
@@ -50,6 +48,16 @@ export const getTasks = async (filter, search) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const updateTask = async (id, update) => {
+  try {
+    console.log("Update task", id, update);
+    const response = await API.patch(`/tasks/${id}`, update);
+    //console.log(response);
+  } catch (error) {
+    console.log("update Error", error);
   }
 };
 

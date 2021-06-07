@@ -20,7 +20,7 @@ const ClientSingleTask = ({ route }) => {
           }}
         ></BaseCard>
         <BaseCard
-          iconName="spinner"
+          iconName={task.done ? "check-circle" : "spinner"}
           text={task.done ? "Done" : "Incomplete"}
           borderColor={task.done ? Color.pelleGreen : Color.red}
           onPress={() => {
