@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: Color.secondaryDark,
     borderRadius: 20,
-    padding: 70,
+    padding: 60,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
