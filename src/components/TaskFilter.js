@@ -11,7 +11,11 @@ const TaskFilter = ({ setTasks }) => {
 
   const getFilteredTasks = async() => {
     const tasks = await getTasks(filter, search)
-    setTasks(tasks.tasks)
+    if (!tasks) {
+      setTasks([])
+    }else{
+      setTasks(tasks.tasks)
+    }
   }
 
   return (
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     marginTop: 20,
+    marginBottom: 'auto',
     height: 190,
     display: 'flex',
     justifyContent: 'space-between',
