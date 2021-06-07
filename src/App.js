@@ -6,11 +6,6 @@ import AuthContext, { AuthContextProvider } from "./store/AuthContext";
 import LoginScreen from "./screens/shared/Login";
 
 export default function App() {
-  // useEffect(() => {
-  //   console.log("in useEffect");
-  //   console.log(authContext);
-  // }, [authContext]);
-
   return (
     <AuthContextProvider>
       <AuthNavigation />
@@ -23,7 +18,7 @@ const AuthNavigation = () => {
   return !authContext.user ? (
     <LoginScreen />
   ) : (
-    <NavigationContainer  >
+    <NavigationContainer>
       {authContext.user.role === "worker" ? (
         <WorkerDashTabs />
       ) : (

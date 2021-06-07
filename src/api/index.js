@@ -53,11 +53,14 @@ export const getTasks = async (filter, search) => {
 
 export const updateTask = async (id, update) => {
   try {
-    console.log("Update task", id, update);
     const response = await API.patch(`/tasks/${id}`, update);
-    //console.log(response);
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
-    console.log("update Error", error);
+    console.log(error);
   }
 };
 

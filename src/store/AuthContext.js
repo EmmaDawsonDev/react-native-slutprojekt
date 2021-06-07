@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 import { login, setDefaultHeaders } from "../api";
 
-const saveUser = async value => {
+const saveUser = async (value) => {
   await SecureStore.setItemAsync("user", value);
 };
 
@@ -12,14 +12,14 @@ const getUser = async () => {
 };
 
 const clearUser = async () => {
-  await SecureStore.deleteItemAsync('user')
-}
+  await SecureStore.deleteItemAsync("user");
+};
 
 const AuthContext = React.createContext({
   user: null,
   isLoading: false,
-  signIn: (data) => { },
-  signOut: () => { },
+  signIn: (data) => {},
+  signOut: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -44,7 +44,7 @@ export const AuthContextProvider = (props) => {
           return {
             ...prevState,
             user: null,
-            isLoading: true
+            isLoading: true,
           };
       }
     },
@@ -60,9 +60,8 @@ export const AuthContextProvider = (props) => {
         let user = await getUser();
 
         if (user) {
-          console.log('found user!');
           authDispatch({ type: "SET_USER", user });
-          setDefaultHeaders(user.token)
+          setDefaultHeaders(user.token);
         }
       } catch (error) {
         console.log(error);
@@ -74,20 +73,20 @@ export const AuthContextProvider = (props) => {
     // 1. skicka email och password till backend
     const user = await login(data);
     if (!user) {
-      return false
+      return false;
     }
-    await saveUser(JSON.stringify(user))
+    await saveUser(JSON.stringify(user));
     // 2. Få tillbaka token och logga in:
     authDispatch({
       type: "SIGN_IN",
       user: user,
     });
-    return true
+    return true;
   };
 
   const signOut = () => {
     authDispatch({ type: "SIGN_OUT" });
-    clearUser()
+    clearUser();
   };
 
   const authContext = {

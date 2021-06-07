@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Modal, Text, Pressable, StyleSheet } from "react-native";
 import { updateTask } from "../../api";
 import Color from "../../constants/color";
+import TaskContext from "../../store/WorkerTasksContext";
 
 const StatusModal = ({ modalVisible, setModalVisible, task }) => {
+  const { tasks, setTasks } = useContext(TaskContext);
   const handleStatusChange = async () => {
-    await updateTask(task.id, { done: !task.done });
-    setModalVisible(!modalVisible);
+    let status;
+    if (task.done) {
+      status = "false";
+    } else {
+      status = "true";
+    }
+    const success = await updateTask(task.id, { done: status });
+    if (success) {
+      task.done = !task.done;
+      setTasks(tasks);
+      setModalVisible(!modalVisible);
+    } else {
+      console.log("Something went wrong with updating task"); // Skapa ett felmeddelande
+    }
   };
 
   return (
