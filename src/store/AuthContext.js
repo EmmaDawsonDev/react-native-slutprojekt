@@ -73,12 +73,16 @@ export const AuthContextProvider = (props) => {
   const signIn = async (data) => {
     // 1. skicka email och password till backend
     const user = await login(data);
+    if (!user) {
+      return false
+    }
     await saveUser(JSON.stringify(user))
     // 2. Få tillbaka token och logga in:
     authDispatch({
       type: "SIGN_IN",
       user: user,
     });
+    return true
   };
 
   const signOut = () => {

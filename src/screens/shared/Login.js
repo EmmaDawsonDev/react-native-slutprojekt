@@ -9,15 +9,20 @@ import BaseContainer from "../../components/BaseComponents/BaseContainer"
 
 const LoginScreen = (props) => {
   const { signIn } = useContext(AuthContext);
-
+  
+  const [error, setError] = useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const [role, setRole] = useState("worker");
-  const pressHandler = () => {
-    signIn({ email, password });
-  };
   
+  // const [role, setRole] = useState("worker");
+  const pressHandler = async() => {
+    setError(false)
+    const success = await signIn({ email, password });
+    if (!success) {
+      setError(true)
+    }
+  };
+    
   return (
     <BaseContainer style={styles.screen}>
       <View style={styles.keyWrapper}>
@@ -50,6 +55,7 @@ const LoginScreen = (props) => {
           value={password}
           placeholder="This is the password"
           />
+          {error && <Text style={styles.errorMessage}>Wrong email or password. Please try again</Text>}
       </View>
       <TouchableOpacity style={styles.button} onPress={pressHandler}>
         <Text style={styles.buttonText} >LOGIN</Text>
@@ -125,6 +131,11 @@ const styles = StyleSheet.create({
 
     // Works only on Android
     elevation: 10,
+  },
+  errorMessage:{
+    color: Color.orange,
+    marginTop: 20,
+    fontWeight: "bold"
   }
 })
 

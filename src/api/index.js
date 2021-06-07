@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const HOST = '192.168.10.169' // Pelle
+// const HOST = '192.168.10.169' // Pelle
+const HOST = '192.168.0.48' //Renzo
 // const HOST = "10.0.2.2";
 
 const API = axios.create({
@@ -24,7 +25,7 @@ export const login = async ({ email, password }) => {
       setDefaultHeaders(response.data.token)
       return response.data;
     } else {
-      throw new Error(response);
+      return false;
     }
   } catch (error) {
     console.log(error);
