@@ -3,16 +3,14 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Platform } from 'r
 import RNPickerSelect from 'react-native-picker-select';
 import Color from "../constants/color"
 import { getTasks } from '../api'
-import AuthContext from '../store/AuthContext'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TaskFilter = ({ setTasks }) => {
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState('')
-  const {user} = useContext(AuthContext)
 
   const getFilteredTasks = async() => {
-    const tasks = await getTasks(user.token, filter, search)
+    const tasks = await getTasks(filter, search)
     setTasks(tasks.tasks)
   }
 
