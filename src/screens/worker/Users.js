@@ -34,13 +34,25 @@ const UsersScreen = (props) => {
   return (
     <BaseContainer>
       <UserFilter setUsers={handleFilterUsers} />
+      {users.length ? 
       <FlatList
         keyExtractor={(user) => String(user.id)}
         data={users}
         renderItem={renderUser}
-      />
+      />:
+      <Text style={styles.noTasksMessage}> No users were found</Text> }
     </BaseContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  noTasksMessage:{
+    color: Color.orange,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 'auto',
+  }
+})
 
 export default UsersScreen;

@@ -10,7 +10,11 @@ const UserFilter = ({ setUsers }) => {
 
   const getFilteredUsers = async () => {
     const users = await getUsers(filter, search)
-    setUsers(users)
+    if (!users) {
+      setUsers([])
+    }else{
+      setUsers(users)
+    }
   }
 
   return (
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     marginTop: 20,
+    marginBottom: 'auto',
     height: 190,
     display: 'flex',
     justifyContent: 'space-between',

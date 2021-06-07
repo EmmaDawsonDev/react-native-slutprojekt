@@ -51,7 +51,7 @@ const WorkerTasksScreen = (props) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   noTasksMessage:{
     color: Color.orange,
     textAlign: 'center',
@@ -59,6 +59,6 @@ const styles = {
     fontSize: 20,
     marginBottom: 'auto',
   }
-}
+})
 
 export default WorkerTasksScreen;
