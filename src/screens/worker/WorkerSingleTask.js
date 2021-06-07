@@ -7,7 +7,6 @@ import Color from "../../constants/color";
 import StatusModal from "../../components/Modals/StatusModal";
 
 const WorkerSingleTask = ({ route }) => {
-  console.log(route.params.task);
   const task = route.params.task;
 
   const [modalVisible, setModalVisible] = useState(false);
