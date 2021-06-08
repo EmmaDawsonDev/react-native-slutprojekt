@@ -16,9 +16,10 @@ const WorkerTasksScreen = (props) => {
     return (
       <ListCard
         task={item}
+        iconName="caret-right"
         onPress={() =>
           props.navigation.navigate("WorkerSingleTask", {
-            task: item,
+            task: item
           })
         }
       />

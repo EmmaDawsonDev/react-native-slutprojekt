@@ -21,7 +21,8 @@ const UsersScreen = (props) => {
   const renderUser = ({ item }) => {
     return (
       <ListCard
-        user={item}
+        text={item.name}
+        iconName="caret-right"
         onPress={() => props.navigation.navigate("SingleUser", { user: item })}
       />
     );
@@ -34,19 +35,19 @@ const UsersScreen = (props) => {
   return (
     <BaseContainer>
       <UserFilter setUsers={handleFilterUsers} />
-      {users.length ? 
-      <FlatList
-        keyExtractor={(user) => String(user.id)}
-        data={users}
-        renderItem={renderUser}
-      />:
-      <Text style={styles.noTasksMessage}> No users were found</Text> }
+      {users.length ?
+        <FlatList
+          keyExtractor={(user) => String(user.id)}
+          data={users}
+          renderItem={renderUser}
+        /> :
+        <Text style={styles.noTasksMessage}> No users were found</Text>}
     </BaseContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  noTasksMessage:{
+  noTasksMessage: {
     color: Color.orange,
     textAlign: 'center',
     fontWeight: 'bold',

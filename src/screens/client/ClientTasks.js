@@ -21,6 +21,7 @@ const ClientTasksScreen = (props) => {
     return (
       <ListCard
         task={item}
+        iconName="caret-right"
         onPress={() =>
           props.navigation.navigate("ClientSingleTask", { task: item })
         }

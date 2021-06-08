@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 const ListCard = (props) => {
   const styles = StyleSheet.create({
     cardContainer: {
+      alignItems: 'center',
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -32,18 +33,26 @@ const ListCard = (props) => {
     cardContent: {
       display: "flex",
       color: "white",
-      fontSize: 24,
+      fontSize: 20,
     },
+    reversed: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'flex-end'
+    },
+    icon: {
+      minWidth: 40
+    }
   });
+
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.cardContainer}>
+    <TouchableOpacity onPress={props.onPress} style={props.iconName === 'caret-right' ? styles.cardContainer : [styles.cardContainer, styles.reversed]}>
       {props.task ? (
         <Text style={styles.cardContent}>{props.task.title}</Text>
       ) : null}
-      {props.user ? (
-        <Text style={styles.cardContent}>{props.user.name}</Text>
+      {props.text ? (
+        <Text style={[styles.cardContent, { marginLeft: props.iconName === 'caret-right' ? 0 : 25 }]}>{props.text}</Text>
       ) : null}
-      <Icon name="caret-right" size={36} color="white" />
+      <Icon style={styles.icon} name={props.iconName} size={36} color="white" />
     </TouchableOpacity>
   );
 };
