@@ -10,17 +10,10 @@ import { getUserById } from '../../api'
 
 const WorkerSingleTask = ({ route, navigation }) => {
   const task = route.params.task;
-  const [user, setUser] = useState(null)
 
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [titleModalVisible, setTitleModalVisible] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);
-
-  const handleGetUser = useCallback(async () => {
-
-    const response = await getUserById(task.clientId)
-    setUser(response)
-  })
 
   return (
     <BaseContainer>
@@ -34,8 +27,6 @@ const WorkerSingleTask = ({ route, navigation }) => {
         setModalVisible={setTitleModalVisible}
         task={task}
       />
-
-
       <View style={styles.imagePlaceholder}></View>
       <BaseFlexRow>
         <BaseCard
@@ -71,10 +62,8 @@ const WorkerSingleTask = ({ route, navigation }) => {
           text="See client info"
           borderColor={Color.orange}
           onPress={() => {
-            handleGetUser()
             navigation.navigate("SingleUser", {
-              userId: task.clientId,
-              user
+              userId: task.clientId
             })
           }}
         ></BaseCard>

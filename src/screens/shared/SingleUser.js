@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import BaseContainer from "../../components/BaseComponents/BaseContainer"
 import { getUserById } from '../../api'
 
 const SingleUser = ({ route }) => {
-  const user = route.params.user
-  console.log(route.params);
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log('running useEffect in SingleUser');
-  //     const responseUser = await getUserById(route.params.userId)
-  //     console.log(responseUser);
-  //     setUser({ responseUser })
-  //   })()
-  // }, [])
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    (async () => {
+      const responseUser = await getUserById(route.params.userId)
+      setUser(responseUser)
+    })()
+  }, [])
 
   return (
     <BaseContainer>
-      {user ? (
+      {!user ? (
         <Text style={styles.loadingMessage}>Loading...</Text>
       ) : (
-        <Text>{user.name}</Text>
+        <Text style={styles.loadingMessage}>{user.name}</Text>
       )}
     </BaseContainer>
   );
