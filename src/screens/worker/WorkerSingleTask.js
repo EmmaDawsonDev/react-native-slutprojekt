@@ -6,7 +6,7 @@ import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
 import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
-import { getUserById } from '../../api'
+import { getUserById } from "../../api";
 
 const WorkerSingleTask = ({ route, navigation }) => {
   const task = route.params.task;
@@ -51,7 +51,7 @@ const WorkerSingleTask = ({ route, navigation }) => {
       <BaseFlexRow>
         <BaseCard
           iconName="camera"
-          text="Change Image"
+          text="Add image"
           borderColor={Color.pink}
           onPress={() => {
             console.log("add image");
@@ -63,8 +63,8 @@ const WorkerSingleTask = ({ route, navigation }) => {
           borderColor={Color.orange}
           onPress={() => {
             navigation.navigate("SingleUser", {
-              userId: task.clientId
-            })
+              userId: task.clientId,
+            });
           }}
         ></BaseCard>
       </BaseFlexRow>

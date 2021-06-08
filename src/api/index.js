@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const HOST = '192.168.10.169' // Pelle
+//const HOST = '192.168.10.169' // Pelle
 //const HOST = '192.168.0.48' //Renzo
-// const HOST = "10.0.2.2";
+const HOST = "10.0.2.2";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
@@ -51,6 +51,21 @@ export const getTasks = async (filter, search) => {
   }
 };
 
+export const addTask = async (payload) => {
+  try {
+    const response = await API.post("/tasks", payload);
+    console.log(response);
+    if (response.status === 200) {
+      const getTasksResponse = await getTasks();
+      return getTasksResponse;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updateTask = async (id, update) => {
   try {
     const response = await API.patch(`/tasks/${id}`, update);
@@ -85,13 +100,12 @@ export const getUsers = async (filter, search) => {
   }
 };
 
-export const getUserById = async id => {
-  console.log('in api');
+export const getUserById = async (id) => {
+  console.log("in api");
   try {
-    const response = await API.get(`/users/${id}`)
-    return response.data
-
+    const response = await API.get(`/users/${id}`);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
-}
+};
