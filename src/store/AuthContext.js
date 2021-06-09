@@ -18,8 +18,9 @@ const clearUser = async () => {
 const AuthContext = React.createContext({
   user: null,
   isLoading: false,
-  signIn: (data) => {},
-  signOut: () => {},
+  signIn: (data) => { },
+  signOut: () => { },
+  updateUser: () => { }
 });
 
 export const AuthContextProvider = (props) => {
@@ -84,6 +85,15 @@ export const AuthContextProvider = (props) => {
     return true;
   };
 
+  const updateUser = (user) => {
+    authDispatch({
+      type: "SET_USER",
+      user: user,
+    });
+
+    saveUser(JSON.stringify(user))
+  }
+
   const signOut = () => {
     authDispatch({ type: "SIGN_OUT" });
     clearUser();
@@ -92,6 +102,7 @@ export const AuthContextProvider = (props) => {
   const authContext = {
     signIn,
     signOut,
+    updateUser,
     user: authState.user,
     isLoading: authState.isLoading,
   };

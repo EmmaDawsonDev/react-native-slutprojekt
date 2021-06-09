@@ -34,7 +34,6 @@ const WorkerSingleTask = ({ route, navigation }) => {
           text={task.title}
           borderColor={Color.blue}
           onPress={() => {
-            console.log("task title");
             setTitleModalVisible(true);
           }}
         ></BaseCard>
@@ -43,7 +42,6 @@ const WorkerSingleTask = ({ route, navigation }) => {
           text={task.done ? "Done" : "Incomplete"}
           borderColor={task.done ? Color.pelleGreen : Color.red}
           onPress={() => {
-            console.log("task status");
             setStatusModalVisible(true);
           }}
         ></BaseCard>

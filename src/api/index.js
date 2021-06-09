@@ -1,8 +1,8 @@
 import axios from "axios";
 
-//const HOST = '192.168.10.169' // Pelle
+const HOST = '192.168.10.169' // Pelle
 //const HOST = '192.168.0.48' //Renzo
-const HOST = "10.0.2.2";
+// const HOST = "10.0.2.2";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
@@ -101,7 +101,6 @@ export const getUsers = async (filter, search) => {
 };
 
 export const getUserById = async (id) => {
-  console.log("in api");
   try {
     const response = await API.get(`/users/${id}`);
     return response.data;
@@ -109,3 +108,17 @@ export const getUserById = async (id) => {
     console.log(error);
   }
 };
+
+export const updateCredentials = async (credential, newValue) => {
+  const payload = {
+    [credential]: newValue
+  }
+
+  try {
+    const response = await API.patch('/me', payload)
+
+    return 'grillkorv'
+  } catch (error) {
+    console.log(error);
+  }
+}

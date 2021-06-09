@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Profile from "../screens/shared/Profile";
 import WorkerTaskStack from "./WorkerTaskStack";
 import UsersStack from "./UsersStack";
+import ProfileStack from "./ProfileStack";
 import Color from '../constants/color'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -18,7 +19,7 @@ function WorkerDashTabs() {
           iconName = 'tasks'
         } else if (route.name === 'UsersStack') {
           iconName = 'users'
-        } else if (route.name === 'Profile') {
+        } else if (route.name === 'ProfileStack') {
           iconName = 'user'
         }
 
@@ -34,7 +35,7 @@ function WorkerDashTabs() {
       }}>
       <Tab.Screen name="WorkerTaskStack" component={WorkerTaskStack} />
       <Tab.Screen name="UsersStack" component={UsersStack} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="ProfileStack" component={ProfileStack} />
     </Tab.Navigator>
   );
 }

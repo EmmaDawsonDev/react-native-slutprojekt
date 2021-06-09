@@ -1,18 +1,37 @@
-import React, { useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, StyleSheet } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseCard from "../../components/BaseComponents/BaseCard";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Color from "../../constants/color";
+import ChangeCredentialsModal from '../../components/Modals/ChangeCredentialsModal'
 
 //dynamiska variabler via props: iconName, Text, borderColor
 
 const ProfileScreen = () => {
   const { signOut, user } = useContext(AuthContext);
+  const [credential, setCredential] = useState('')
+  const [credentialsModalVisible, setCredentialsModalVisible] = useState(false);
+
+  const handleChangeUserName = () => {
+    setCredential('name')
+    setCredentialsModalVisible(true)
+  }
+  const handleChangeUserEmail = () => {
+    setCredential('email')
+    setCredentialsModalVisible(true)
+  }
+
   return (
     <BaseContainer>
+      <ChangeCredentialsModal
+        modalVisible={credentialsModalVisible}
+        setModalVisible={setCredentialsModalVisible}
+        credential={credential}
+        user={user}
+      />
       <View style={styles.circle}>
         <Icon name="user" size={60} color="white" solid />
       </View>
@@ -21,13 +40,13 @@ const ProfileScreen = () => {
           iconName="user"
           text={user.name}
           borderColor={Color.blue}
-          onPress={() => console.log("name")} //Lägg till handler funktion som öppnar modal och redigera name
+          onPress={handleChangeUserName} //Lägg till handler funktion som öppnar modal och redigera name
         ></BaseCard>
         <BaseCard
           iconName="envelope"
           text={user.email}
           borderColor={Color.red}
-          onPress={() => console.log("email")} //Lägg till handler funktion som öppnar modal och redigera email
+          onPress={handleChangeUserEmail} //Lägg till handler funktion som öppnar modal och redigera email
         ></BaseCard>
       </BaseFlexRow>
       <BaseFlexRow>

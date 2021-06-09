@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
+  StatusBar
 } from "react-native";
 import { addTask } from "../../api";
 import Color from "../../constants/color";
@@ -23,7 +24,7 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
     }
     const payload = { title: taskTitle, clientEmail: email };
     const updatedTasks = await addTask(payload);
-    console.log(updatedTasks);
+
     if (updatedTasks) {
       setTasks(updatedTasks.tasks);
       setModalVisible(!modalVisible);
@@ -40,6 +41,7 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
 
   return (
     <View style={styles.centeredView}>
+      <StatusBar barStyle="light-content" />
       <Modal
         animationType="slide"
         transparent={false}
@@ -60,9 +62,11 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
             <Text style={styles.modalText}>Client email</Text>
             <TextInput
               style={styles.input}
+              autoCorrect={false}
+              autoCapitalize="none"
               onChangeText={(text) => setEmail(text)}
               value={email}
-              type="email"
+              keyboardType="email-address"
             />
 
             <View style={styles.buttonContainer}>
@@ -91,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 0,
     backgroundColor: Color.primaryDark,
   },
   modalView: {
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 60,
     alignItems: "center",
+    maxWidth: "95%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

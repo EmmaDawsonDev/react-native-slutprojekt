@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { TouchableOpacity, FlatList, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, FlatList, Text, StyleSheet, StatusBar } from "react-native";
 import AuthContext from "../../store/AuthContext";
 import TaskContext from "../../store/WorkerTasksContext";
-import { getTasks } from "../../api";
 import ListCard from "../../components/ListCard";
 import TaskFilter from "../../components/TaskFilter";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
@@ -36,6 +35,7 @@ const WorkerTasksScreen = (props) => {
 
   return (
     <BaseContainer>
+
       <AddTaskModal
         modalVisible={addTaskModalVisible}
         setModalVisible={setAddTaskModalVisible}
@@ -60,6 +60,7 @@ const WorkerTasksScreen = (props) => {
       >
         <Icon name="plus" size={28} color="white" />
       </TouchableOpacity>
+      <StatusBar barStyle="dark-content" />
     </BaseContainer>
   );
 };

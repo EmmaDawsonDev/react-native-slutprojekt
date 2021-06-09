@@ -23,7 +23,7 @@ const UsersScreen = (props) => {
       <ListCard
         text={item.name}
         iconName="caret-right"
-        onPress={() => props.navigation.navigate("SingleUser", { user: item })}
+        onPress={() => props.navigation.navigate("SingleUser", { userId: item.id })}
       />
     );
   };
