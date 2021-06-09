@@ -6,23 +6,29 @@ import BaseCard from "../../components/BaseComponents/BaseCard";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Color from "../../constants/color";
-import ChangeCredentialsModal from '../../components/Modals/ChangeCredentialsModal'
+import ChangeCredentialsModal from "../../components/Modals/ChangeCredentialsModal";
+import ChangePasswordModal from "../../components/Modals/ChangePasswordModal";
 
 //dynamiska variabler via props: iconName, Text, borderColor
 
 const ProfileScreen = () => {
   const { signOut, user } = useContext(AuthContext);
-  const [credential, setCredential] = useState('')
+  const [credential, setCredential] = useState("");
   const [credentialsModalVisible, setCredentialsModalVisible] = useState(false);
+  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
 
   const handleChangeUserName = () => {
-    setCredential('name')
-    setCredentialsModalVisible(true)
-  }
+    setCredential("name");
+    setCredentialsModalVisible(true);
+  };
   const handleChangeUserEmail = () => {
-    setCredential('email')
-    setCredentialsModalVisible(true)
-  }
+    setCredential("email");
+    setCredentialsModalVisible(true);
+  };
+
+  const handleChangeUserPassword = () => {
+    setPasswordModalVisible(true);
+  };
 
   return (
     <BaseContainer>
@@ -30,6 +36,12 @@ const ProfileScreen = () => {
         modalVisible={credentialsModalVisible}
         setModalVisible={setCredentialsModalVisible}
         credential={credential}
+        user={user}
+      />
+
+      <ChangePasswordModal
+        modalVisible={passwordModalVisible}
+        setModalVisible={setPasswordModalVisible}
         user={user}
       />
       <View style={styles.circle}>
@@ -54,7 +66,7 @@ const ProfileScreen = () => {
           iconName="key"
           text="Change password"
           borderColor={Color.pink}
-          onPress={() => console.log("password")} //Lägg till handler funktion som öppnar modal och redigera password
+          onPress={handleChangeUserPassword} //Lägg till handler funktion som öppnar modal och redigera password
         ></BaseCard>
         <BaseCard
           iconName="sign-out-alt"

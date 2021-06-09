@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useEffect } from "react";
+
 import {
   View,
   Modal,
@@ -8,24 +8,16 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
-import { updateCredentials } from "../../api";
+import { updatePassword } from "../../api";
 import Color from "../../constants/color";
 import AuthContext from "../../store/AuthContext";
 
-const ChangeCredentialsModal = ({
-  modalVisible,
-  setModalVisible,
-  credential,
-  user,
-}) => {
-  const { updateUser } = useContext(AuthContext);
+const ChangePasswordModal = ({ modalVisible, setModalVisible, user }) => {
+  const { signOut } = useContext(AuthContext);
 
   const [newValue, setNewValue] = useState("");
+  const [confirmValue, setConfirmValue] = useState("");
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    setNewValue(user[credential]);
-  }, [credential]);
 
   const clearAndClose = () => {
     setModalVisible(false);
@@ -33,13 +25,12 @@ const ChangeCredentialsModal = ({
 
   const handleOnSubmit = async () => {
     setError(false);
-    const response = await updateCredentials(credential, newValue);
+    const response = await updatePassword(newValue, confirmValue);
     if (!response) {
       setError(true);
     } else {
-      user[credential] = newValue;
-      updateUser(user);
       setModalVisible(false);
+      signOut();
     }
   };
 
@@ -56,23 +47,27 @@ const ChangeCredentialsModal = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{`Change ${credential}`}</Text>
+            <Text style={styles.modalText}>New password</Text>
             <TextInput
               style={styles.input}
               onChangeText={(text) => setNewValue(text)}
               value={newValue}
             />
+            <Text style={styles.modalText}>Confirm new password</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setConfirmValue(text)}
+              value={confirmValue}
+            />
             {error && (
-              <Text style={styles.errorMessage}>
-                Couldn't update {credential}
-              </Text>
+              <Text style={styles.errorMessage}>Couldn't update password</Text>
             )}
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
                 onPress={handleOnSubmit} // Anropa API och ändra status
               >
-                <Text style={styles.textStyle}>Submit</Text>
+                <Text style={styles.textStyle}>Submit and sign out</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonCancel]}
@@ -115,8 +110,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     elevation: 2,
-    width: 100,
-    marginHorizontal: 10,
+    width: 250,
+    marginVertical: 5,
   },
   buttonConfirm: {
     backgroundColor: Color.blue,
@@ -127,9 +122,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.secondaryDark,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    marginTop: 40,
+    marginTop: 20,
   },
   textStyle: {
     color: "white",
@@ -137,10 +132,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+    marginBottom: 5,
+    alignSelf: "flex-start",
     color: "white",
-    fontSize: 20,
+    fontSize: 16,
   },
   input: {
     backgroundColor: "#dedede",
@@ -148,6 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingLeft: 10,
     width: 250,
+    marginBottom: 20,
   },
   errorMessage: {
     color: Color.orange,
@@ -156,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangeCredentialsModal;
+export default ChangePasswordModal;

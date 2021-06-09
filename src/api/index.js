@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const HOST = '192.168.10.169' // Pelle
+//const HOST = '192.168.10.169' // Pelle
 //const HOST = '192.168.0.48' //Renzo
-// const HOST = "10.0.2.2";
+const HOST = "10.0.2.2";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
@@ -111,14 +111,36 @@ export const getUserById = async (id) => {
 
 export const updateCredentials = async (credential, newValue) => {
   const payload = {
-    [credential]: newValue
-  }
+    [credential]: newValue,
+  };
 
   try {
-    const response = await API.patch('/me', payload)
+    const response = await API.patch("/me", payload);
 
-    return 'grillkorv'
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
-    console.log(error);
+    return false;
   }
-}
+};
+
+export const updatePassword = async (password, confirmPassword) => {
+  const payload = {
+    password,
+    confirmPassword,
+  };
+  try {
+    const response = await API.patch("/me", payload);
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
