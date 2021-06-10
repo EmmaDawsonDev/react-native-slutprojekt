@@ -7,6 +7,7 @@ import Color from "../../constants/color";
 import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
 import { getUserById } from "../../api";
+import ImageModal from "../../components/Modals/AddImageModal";
 
 const WorkerSingleTask = ({ route, navigation }) => {
   const task = route.params.task;
@@ -25,6 +26,11 @@ const WorkerSingleTask = ({ route, navigation }) => {
       <TitleModal
         modalVisible={titleModalVisible}
         setModalVisible={setTitleModalVisible}
+        task={task}
+      />
+      <ImageModal
+        modalVisible={imageModalVisible}
+        setModalVisible={setImageModalVisible}
         task={task}
       />
       <View style={styles.imagePlaceholder}></View>
@@ -52,7 +58,7 @@ const WorkerSingleTask = ({ route, navigation }) => {
           text="Add image"
           borderColor={Color.pink}
           onPress={() => {
-            console.log("add image");
+            setImageModalVisible(true);
           }}
         ></BaseCard>
         <BaseCard
