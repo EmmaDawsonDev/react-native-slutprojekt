@@ -15,8 +15,8 @@ import TaskContext from "../../store/WorkerTasksContext";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 
-const AddImageModal = ({ modalVisible, setModalVisible, task }) => {
-  //const { setTasks } = useContext(TaskContext);
+const AddImageModal = ({ modalVisible, setModalVisible, task, setCurrentImage }) => {
+  const { setTasks } = useContext(TaskContext);
 
   const [image, setImage] = useState(null);
 
@@ -43,7 +43,21 @@ const AddImageModal = ({ modalVisible, setModalVisible, task }) => {
   };
 
   const handleAddImage = async () => {
-    console.log(image);
+    const formData = new FormData()
+    formData.append("image", {
+      name: "random.jpg",
+      type: 'image/*',
+      uri: Platform.OS === 'android' ? image.uri : image.uri.replace("file://", "")
+    })
+
+    console.log(formData)
+
+    const response = await addImage(task.id, formData)
+    console.log(response)
+    setCurrentImage(response.image)
+    setTasks(response.tasks)
+    setImage(null)
+    setModalVisible(false)
   };
 
   const clearAndCloseHandler = () => {
@@ -97,7 +111,7 @@ const AddImageModal = ({ modalVisible, setModalVisible, task }) => {
               {image && (
                 <Pressable
                   style={[styles.button, styles.buttonConfirm]}
-                  onPress={handleAddImage} // Anropa API och ändra status
+                  onPress={handleAddImage} 
                 >
                   <Text style={styles.textStyle}>Add image</Text>
                 </Pressable>

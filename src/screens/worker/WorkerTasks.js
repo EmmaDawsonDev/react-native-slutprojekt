@@ -15,6 +15,10 @@ const WorkerTasksScreen = (props) => {
 
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
 
+  useEffect(() => {
+    
+  },[tasks])
+
   const renderTask = ({ item }) => {
     return (
       <ListCard

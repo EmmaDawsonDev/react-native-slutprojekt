@@ -1,8 +1,8 @@
 import axios from "axios";
 
 //const HOST = '192.168.10.169' // Pelle
-//const HOST = '192.168.0.48' //Renzo
-const HOST = "10.0.2.2";
+const HOST = '192.168.0.48' //Renzo
+// const HOST = "10.0.2.2";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
@@ -144,3 +144,20 @@ export const updatePassword = async (password, confirmPassword) => {
     return false;
   }
 };
+
+export const addImage = async (id, formData) => {
+  try {
+    const response = await API.post(`/tasks/${id}/image`, formData)
+    console.log(response);
+    if (response.status === 200) {
+      const taskResponse = await getTasks()
+      return {tasks: taskResponse.tasks, image: response.data.image.title};
+    } else {
+      return false;
+    }
+
+  } catch (error) {
+    console.log(error);
+    return false
+  }
+}

@@ -4,7 +4,6 @@ import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
-import houseImage from "../../assets/houses.png";
 
 const ClientSingleTask = ({ route, navigation }) => {
   const task = route.params.task;

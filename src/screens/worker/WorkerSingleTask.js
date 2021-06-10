@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useCallback, useEffect, useContext } from "react";
+import { View, StyleSheet, Image } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import BaseCard from "../../components/BaseComponents/BaseCard";
@@ -8,13 +8,20 @@ import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
 import { getUserById } from "../../api";
 import ImageModal from "../../components/Modals/AddImageModal";
+import workerTasksContext from '../../store/WorkerTasksContext'
+
+//const HOST = '192.168.10.169' // Pelle
+const HOST = '192.168.0.48' //Renzo
+// const HOST = "10.0.2.2";
 
 const WorkerSingleTask = ({ route, navigation }) => {
-  const task = route.params.task;
-
+  let task = route.params.task;
+  const {tasks} = useContext(workerTasksContext)
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [titleModalVisible, setTitleModalVisible] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);
+
+  const [currentImage, setCurrentImage] = useState(task.Images.length ? task.Images[0].title : null)
 
   return (
     <BaseContainer>
@@ -32,8 +39,18 @@ const WorkerSingleTask = ({ route, navigation }) => {
         modalVisible={imageModalVisible}
         setModalVisible={setImageModalVisible}
         task={task}
+        setCurrentImage={setCurrentImage}
       />
-      <View style={styles.imagePlaceholder}></View>
+      <View style={styles.imagePlaceholder}>
+        { task.Images.length ? 
+        <Image style={styles.image} source={{ uri: `http://${HOST}:5000/${currentImage}` }} ></Image>
+        :
+        <Image
+          style={styles.image}
+          source={require("../../assets/houses.png")}
+        />
+        }
+      </View>
       <BaseFlexRow>
         <BaseCard
           iconName="tasks"
@@ -79,7 +96,7 @@ const WorkerSingleTask = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   imagePlaceholder: {
     width: "85%",
-    height: 100,
+    height: 200,
     backgroundColor: Color.secondaryDark,
     alignSelf: "center",
     marginBottom: 20,
@@ -89,6 +106,10 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 5,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
 
