@@ -78,11 +78,17 @@ const WorkerSingleTask = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   imagePlaceholder: {
-    width: "90%",
+    width: "85%",
     height: 100,
-    backgroundColor: "yellow",
+    backgroundColor: Color.secondaryDark,
     alignSelf: "center",
     marginBottom: 20,
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+    elevation: 5,
   },
 });
 

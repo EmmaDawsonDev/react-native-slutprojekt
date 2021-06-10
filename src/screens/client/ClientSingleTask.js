@@ -1,15 +1,21 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
+import houseImage from "../../assets/houses.png";
 
-const ClientSingleTask = ({ route }) => {
+const ClientSingleTask = ({ route, navigation }) => {
   const task = route.params.task;
   return (
     <BaseContainer>
-      <View style={styles.imagePlaceholder}></View>
+      <View style={styles.imagePlaceholder}>
+        <Image
+          style={styles.image}
+          source={require("../../assets/houses.png")}
+        />
+      </View>
       <BaseFlexRow>
         <BaseCard
           iconName="exclamation-circle"
@@ -42,7 +48,9 @@ const ClientSingleTask = ({ route }) => {
           text="See my contact"
           borderColor={Color.orange}
           onPress={() => {
-            console.log("see my contact");
+            navigation.navigate("SingleUser", {
+              userId: task.workerId,
+            });
           }}
         ></BaseCard>
       </BaseFlexRow>
@@ -52,11 +60,22 @@ const ClientSingleTask = ({ route }) => {
 
 const styles = StyleSheet.create({
   imagePlaceholder: {
-    width: "90%",
+    overflow: "hidden",
+    width: "85%",
     height: 100,
-    backgroundColor: "yellow",
+    backgroundColor: Color.secondaryDark,
     alignSelf: "center",
     marginBottom: 20,
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+    elevation: 5,
+  },
+  image: {
+    width: 350,
+    height: 100,
   },
 });
 
