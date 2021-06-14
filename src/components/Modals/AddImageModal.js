@@ -15,7 +15,7 @@ import TaskContext from "../../store/WorkerTasksContext";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 
-const AddImageModal = ({ modalVisible, setModalVisible, task, setCurrentImage }) => {
+const AddImageModal = ({ modalVisible, setModalVisible, setAllowed, task, setCurrentImage }) => {
   const { setTasks } = useContext(TaskContext);
 
   const [image, setImage] = useState(null);
@@ -24,7 +24,9 @@ const AddImageModal = ({ modalVisible, setModalVisible, task, setCurrentImage })
 
   useEffect(() => {
     ImagePicker.requestMediaLibraryPermissionsAsync().then((response) => {
-      console.log(response);
+      if (response.status === 'granted') {
+        setAllowed(true)
+      }
     });
   }, []);
 
@@ -36,9 +38,13 @@ const AddImageModal = ({ modalVisible, setModalVisible, task, setCurrentImage })
   };
 
   const openCamera = async () => {
-    const result = await ImagePicker.launchCameraAsync({});
-    if (!result.cancelled) {
-      setImage(result);
+    const permission = await ImagePicker.requestCameraPermissionsAsync()
+
+    if (permission.status === 'granted') {
+      const result = await ImagePicker.launchCameraAsync();
+      if (!result.cancelled) {
+        setImage(result);
+      }
     }
   };
 
@@ -111,7 +117,7 @@ const AddImageModal = ({ modalVisible, setModalVisible, task, setCurrentImage })
               {image && (
                 <Pressable
                   style={[styles.button, styles.buttonConfirm]}
-                  onPress={handleAddImage} 
+                  onPress={handleAddImage}
                 >
                   <Text style={styles.textStyle}>Add image</Text>
                 </Pressable>

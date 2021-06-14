@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//const HOST = '192.168.10.169' // Pelle
-const HOST = '192.168.0.48' //Renzo
+const HOST = '192.168.10.170' // Pelle
+// const HOST = '192.168.0.48' //Renzo
 // const HOST = "10.0.2.2";
 
 const API = axios.create({
@@ -151,7 +151,7 @@ export const addImage = async (id, formData) => {
     console.log(response);
     if (response.status === 200) {
       const taskResponse = await getTasks()
-      return {tasks: taskResponse.tasks, image: response.data.image.title};
+      return { tasks: taskResponse.tasks, image: response.data.image.title };
     } else {
       return false;
     }
