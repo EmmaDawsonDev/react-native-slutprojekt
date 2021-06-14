@@ -11,9 +11,8 @@ import ImageModal from "../../components/Modals/AddImageModal";
 import Lightbox from "../../components/Modals/Lightbox";
 import workerTasksContext from '../../store/WorkerTasksContext'
 
-const HOST = '192.168.10.170' // Pelle
-// const HOST = '192.168.0.48' //Renzo
-// const HOST = "10.0.2.2";
+import {HOST} from '../../host.json'
+
 
 const WorkerSingleTask = ({ route, navigation }) => {
   let task = route.params.task;

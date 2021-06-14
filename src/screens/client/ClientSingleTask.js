@@ -1,19 +1,37 @@
-import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import React, {useState} from "react";
+import { View, StyleSheet, Image, Pressable, Alert } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
 import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
+import Lightbox from '../../components/Modals/Lightbox'
+import {HOST} from '../../host.json'
 
 const ClientSingleTask = ({ route, navigation }) => {
+  const [lightboxVisible, setLightboxVisible] = useState(false);
   const task = route.params.task;
+  const uri = task.Images.length ? `http://${HOST}:5000/${task.Images[0].title}` : null
+
+  console.log(uri);
   return (
     <BaseContainer>
+      <Lightbox
+        modalVisible={lightboxVisible}
+        setModalVisible={setLightboxVisible}
+        task={task}
+      />
+
       <View style={styles.imagePlaceholder}>
-        <Image
-          style={styles.image}
-          source={require("../../assets/houses.png")}
-        />
+          {task.Images.length ?
+            <Pressable onPress={() => setLightboxVisible(true)}>
+              <Image style={styles.image} source={{ uri }} ></Image>
+            </Pressable>
+            :
+            <Image
+              style={styles.image}
+              source={require("../../assets/houses.png")}
+            />
+        }
       </View>
       <BaseFlexRow>
         <BaseCard
@@ -29,6 +47,8 @@ const ClientSingleTask = ({ route, navigation }) => {
           text={task.done ? "Done" : "Incomplete"}
           borderColor={task.done ? Color.pelleGreen : Color.red}
           onPress={() => {
+            const message = task.done ? "It's over.." : "We are working on it"
+            Alert.alert('Current status',message)
             console.log("task status");
           }}
         ></BaseCard>
@@ -73,8 +93,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: 350,
-    height: 100,
+    borderRadius: 10,
+    width: '100%',
+    height: '100%',
   },
 });
 

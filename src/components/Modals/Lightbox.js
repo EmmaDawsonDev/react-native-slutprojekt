@@ -17,7 +17,7 @@ import Color from "../../constants/color";
 const Lightbox = ({ modalVisible, setModalVisible, task }) => {
   const imageSize = Dimensions.get("window").width * 0.85;
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [uri, setUri] = useState(`http://${HOST}:5000/${task.Images[0].title}`)
+  const [uri, setUri] = useState(task.Images.length ? `http://${HOST}:5000/${task.Images[0].title}`: null)
   const translateX = new Animated.Value(500)
 
   const onGestureEvent = new Animated.Event([
@@ -29,7 +29,7 @@ const Lightbox = ({ modalVisible, setModalVisible, task }) => {
   ], { useNativeDriver: true })
 
   useEffect(() => {
-    setUri(`http://${HOST}:5000/${task.Images[currentIndex].title}`)
+    task.Images.length && setUri(`http://${HOST}:5000/${task.Images[currentIndex].title}`)
   }, [currentIndex])
 
   useEffect(() => {
