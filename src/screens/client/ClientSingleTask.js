@@ -14,7 +14,6 @@ const ClientSingleTask = ({ route, navigation }) => {
     ? `http://${HOST}:5000/${task.Images[0].title}`
     : null;
 
-  console.log(uri);
   return (
     <>
       <BaseContainer>
@@ -40,7 +39,6 @@ const ClientSingleTask = ({ route, navigation }) => {
                 "Report an error",
                 "This feature is not yet available"
               );
-              console.log("error report");
             }}
           ></BaseCard>
           <BaseCard
@@ -52,7 +50,6 @@ const ClientSingleTask = ({ route, navigation }) => {
                 ? "It's over.."
                 : "We are working on it";
               Alert.alert("Current status", message);
-              console.log("task status");
             }}
           ></BaseCard>
         </BaseFlexRow>
@@ -66,7 +63,6 @@ const ClientSingleTask = ({ route, navigation }) => {
                 "Leave a review",
                 "This feature is not yet available"
               );
-              console.log("review");
             }}
           ></BaseCard>
           <BaseCard

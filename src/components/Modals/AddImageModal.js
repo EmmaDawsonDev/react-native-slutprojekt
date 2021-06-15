@@ -15,7 +15,13 @@ import TaskContext from "../../store/WorkerTasksContext";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 
-const AddImageModal = ({ modalVisible, setModalVisible, setAllowed, task, setCurrentImage }) => {
+const AddImageModal = ({
+  modalVisible,
+  setModalVisible,
+  setAllowed,
+  task,
+  setCurrentImage,
+}) => {
   const { setTasks } = useContext(TaskContext);
 
   const [image, setImage] = useState(null);
@@ -24,8 +30,8 @@ const AddImageModal = ({ modalVisible, setModalVisible, setAllowed, task, setCur
 
   useEffect(() => {
     ImagePicker.requestMediaLibraryPermissionsAsync().then((response) => {
-      if (response.status === 'granted') {
-        setAllowed(true)
+      if (response.status === "granted") {
+        setAllowed(true);
       }
     });
   }, []);
@@ -38,9 +44,9 @@ const AddImageModal = ({ modalVisible, setModalVisible, setAllowed, task, setCur
   };
 
   const openCamera = async () => {
-    const permission = await ImagePicker.requestCameraPermissionsAsync()
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (permission.status === 'granted') {
+    if (permission.status === "granted") {
       const result = await ImagePicker.launchCameraAsync();
       if (!result.cancelled) {
         setImage(result);
@@ -49,21 +55,21 @@ const AddImageModal = ({ modalVisible, setModalVisible, setAllowed, task, setCur
   };
 
   const handleAddImage = async () => {
-    const formData = new FormData()
+    const formData = new FormData();
     formData.append("image", {
       name: "random.jpg",
-      type: 'image/*',
-      uri: Platform.OS === 'android' ? image.uri : image.uri.replace("file://", "")
-    })
+      type: "image/*",
+      uri:
+        Platform.OS === "android"
+          ? image.uri
+          : image.uri.replace("file://", ""),
+    });
 
-    console.log(formData)
-
-    const response = await addImage(task.id, formData)
-    console.log(response)
-    setCurrentImage(response.image)
-    setTasks(response.tasks)
-    setImage(null)
-    setModalVisible(false)
+    const response = await addImage(task.id, formData);
+    setCurrentImage(response.image);
+    setTasks(response.tasks);
+    setImage(null);
+    setModalVisible(false);
   };
 
   const clearAndCloseHandler = () => {

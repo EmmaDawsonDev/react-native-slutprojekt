@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {HOST} from '../host.json'
+import { HOST } from "../host.json";
 
 const API = axios.create({
   baseURL: `http://${HOST}:5000/api/v1`,
@@ -52,7 +52,7 @@ export const getTasks = async (filter, search) => {
 export const addTask = async (payload) => {
   try {
     const response = await API.post("/tasks", payload);
-    console.log(response);
+
     if (response.status === 200) {
       const getTasksResponse = await getTasks();
       return getTasksResponse;
@@ -145,17 +145,16 @@ export const updatePassword = async (password, confirmPassword) => {
 
 export const addImage = async (id, formData) => {
   try {
-    const response = await API.post(`/tasks/${id}/image`, formData)
-    console.log(response);
+    const response = await API.post(`/tasks/${id}/image`, formData);
+
     if (response.status === 200) {
-      const taskResponse = await getTasks()
+      const taskResponse = await getTasks();
       return { tasks: taskResponse.tasks, image: response.data.image.title };
     } else {
       return false;
     }
-
   } catch (error) {
     console.log(error);
-    return false
+    return false;
   }
-}
+};

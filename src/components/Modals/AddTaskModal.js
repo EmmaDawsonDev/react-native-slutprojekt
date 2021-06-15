@@ -6,7 +6,7 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import { addTask } from "../../api";
 import Color from "../../constants/color";
@@ -29,7 +29,7 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
       setTasks(updatedTasks.tasks);
       setModalVisible(!modalVisible);
     } else {
-      console.log("Something went wrong");
+      console.log("Something went wrong"); // Add error handling here
     }
   };
 
