@@ -5,10 +5,15 @@ import {
   Animated,
   Dimensions,
   Image,
+  Platform,
   Pressable,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
-import { PanGestureHandler, State } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PinchGestureHandler,
+  State,
+} from "react-native-gesture-handler";
 import { HOST } from "../../host.json";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -16,6 +21,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 const Lightbox = ({ setModalVisible, task, worker }) => {
   const imageSize = Dimensions.get("window").width * 0.85;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   const [uri, setUri] = useState(
     task.Images.length ? `http://${HOST}:5000/${task.Images[0].title}` : null
@@ -33,6 +39,24 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
     ],
     { useNativeDriver: true }
   );
+
+  const scale = new Animated.Value(1);
+
+  const onPinchGestureEvent = new Animated.event([{ nativeEvent: { scale } }], {
+    useNativeDriver: true,
+  });
+
+  const onPinchHandlerStateChange = (event) => {
+    Platform.OS === "ios" ? setIsVisible(false) : null;
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      Animated.spring(scale, {
+        toValue: 1,
+        useNativeDriver: true,
+        bounciness: 1,
+      }).start();
+      setIsVisible(true);
+    }
+  };
 
   useEffect(() => {
     task.Images.length &&
@@ -57,7 +81,7 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
         }
         translateX.setValue(500);
         Animated.timing(translateX, {
-          toValue: 30,
+          toValue: 0,
           duration: 200,
           useNativeDriver: true,
         }).start();
@@ -69,7 +93,7 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
         }
         translateX.setValue(-500);
         Animated.timing(translateX, {
-          toValue: -30,
+          toValue: 0,
           duration: 200,
           useNativeDriver: true,
         }).start();
@@ -98,7 +122,7 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
           <Animated.View
             style={{ position: "relative", transform: [{ translateX }] }}
           >
-            {worker && (
+            {worker && isVisible && (
               <View style={styles.deleteBtn}>
                 <Icon
                   style={styles.icon}
@@ -108,20 +132,31 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
                 />
               </View>
             )}
-            <Image
-              source={{ uri }}
-              style={[styles.image, { width: imageSize }]}
-            />
+            <PinchGestureHandler
+              onGestureEvent={onPinchGestureEvent}
+              onHandlerStateChange={onPinchHandlerStateChange}
+            >
+              <Animated.Image
+                source={{ uri }}
+                style={[
+                  styles.image,
+                  { width: imageSize },
+                  { transform: [{ scale }] },
+                ]}
+              />
+            </PinchGestureHandler>
           </Animated.View>
         </PanGestureHandler>
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={[styles.button, styles.buttonCancel]}
-            onPress={onCloseHandler}
-          >
-            <Text style={styles.textStyle}>Close</Text>
-          </Pressable>
-        </View>
+        {isVisible && (
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={[styles.button, styles.buttonCancel]}
+              onPress={onCloseHandler}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );
