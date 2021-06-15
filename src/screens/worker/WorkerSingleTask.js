@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { View, Pressable, StyleSheet, Image, Alert } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
@@ -6,17 +6,14 @@ import BaseCard from "../../components/BaseComponents/BaseCard";
 import Color from "../../constants/color";
 import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
-import { getUserById } from "../../api";
 import ImageModal from "../../components/Modals/AddImageModal";
-
-import workerTasksContext from "../../store/WorkerTasksContext";
 import LightboxView from "../../components/Modals/LightboxView";
 
 import { HOST } from "../../host.json";
 
 const WorkerSingleTask = ({ route, navigation }) => {
   let task = route.params.task;
-  const { tasks } = useContext(workerTasksContext);
+
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [titleModalVisible, setTitleModalVisible] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);

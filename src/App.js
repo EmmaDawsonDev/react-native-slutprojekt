@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import ClientDashTabs from "./navigators/ClientDashTabs";
 import WorkerDashTabs from "./navigators/WorkerDashTabs";
