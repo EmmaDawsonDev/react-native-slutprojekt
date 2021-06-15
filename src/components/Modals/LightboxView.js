@@ -6,8 +6,7 @@ import {
   Dimensions,
   Image,
   Pressable,
-  StyleSheet,
-  StatusBar,
+  StyleSheet
 } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { HOST } from "../../host.json";
@@ -23,7 +22,6 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
   );
 
   let translateX = useRef(new Animated.Value(500)).current;
-  console.log(translateX);
 
   const onGestureEvent = new Animated.Event(
     [
@@ -42,7 +40,6 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
   }, [currentIndex]);
 
   useEffect(() => {
-    console.log("I'm running");
     Animated.spring(translateX, {
       toValue: 0,
       duration: 200,
@@ -53,34 +50,27 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
   const handleStateChange = (event) => {
     if (event.nativeEvent.oldState == State.ACTIVE) {
       if (event.nativeEvent.translationX < -200) {
-        const newIndex = currentIndex + 1;
-        if (newIndex < task.Images.length) {
+        if (currentIndex < task.Images.length - 1) {
           setCurrentIndex((prevState) => prevState + 1);
         } else {
           setCurrentIndex(0);
         }
-
-        //setSwipeValue(500);
         translateX.setValue(500);
         Animated.timing(translateX, {
           toValue: 30,
           duration: 200,
-
           useNativeDriver: true,
         }).start();
       } else if (event.nativeEvent.translationX > 200) {
-        const newIndex = currentIndex - 1;
-        if (newIndex > 0) {
+        if (currentIndex > 0) {
           setCurrentIndex((prevState) => prevState - 1);
         } else {
           setCurrentIndex(task.Images.length - 1);
         }
-        //setSwipeValue(-500);
         translateX.setValue(-500);
         Animated.timing(translateX, {
           toValue: -30,
           duration: 200,
-
           useNativeDriver: true,
         }).start();
       } else {
