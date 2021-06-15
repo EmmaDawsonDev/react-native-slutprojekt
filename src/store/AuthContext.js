@@ -18,9 +18,9 @@ const clearUser = async () => {
 const AuthContext = React.createContext({
   user: null,
   isLoading: false,
-  signIn: (data) => { },
-  signOut: () => { },
-  updateUser: () => { }
+  signIn: (data) => {},
+  signOut: () => {},
+  updateUser: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -73,7 +73,7 @@ export const AuthContextProvider = (props) => {
   const signIn = async (data) => {
     // 1. skicka email och password till backend
     const user = await login(data);
-    if (!user) {
+    if (!user || user.role === "admin") {
       return false;
     }
     await saveUser(JSON.stringify(user));
@@ -91,8 +91,8 @@ export const AuthContextProvider = (props) => {
       user: user,
     });
 
-    saveUser(JSON.stringify(user))
-  }
+    saveUser(JSON.stringify(user));
+  };
 
   const signOut = () => {
     authDispatch({ type: "SIGN_OUT" });

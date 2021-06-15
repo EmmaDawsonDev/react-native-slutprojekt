@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import WorkerTasks from "../screens/worker/WorkerTasks";
 import WorkerSingleTask from "../screens/worker/WorkerSingleTask";
-import SingleUser from '../screens/shared/SingleUser'
+import SingleUser from "../screens/shared/SingleUser";
 import Color from "../constants/color";
 import { TasksContextProvider } from "../store/WorkerTasksContext";
 

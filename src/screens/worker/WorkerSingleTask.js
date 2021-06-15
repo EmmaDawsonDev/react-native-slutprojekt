@@ -8,105 +8,111 @@ import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
 import { getUserById } from "../../api";
 import ImageModal from "../../components/Modals/AddImageModal";
-import Lightbox from "../../components/Modals/Lightbox";
-import workerTasksContext from '../../store/WorkerTasksContext'
 
-import {HOST} from '../../host.json'
+import workerTasksContext from "../../store/WorkerTasksContext";
+import LightboxView from "../../components/Modals/LightboxView";
 
+import { HOST } from "../../host.json";
 
 const WorkerSingleTask = ({ route, navigation }) => {
   let task = route.params.task;
-  const { tasks } = useContext(workerTasksContext)
+  const { tasks } = useContext(workerTasksContext);
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [titleModalVisible, setTitleModalVisible] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [lightboxVisible, setLightboxVisible] = useState(false);
-  const [allowed, setAllowed] = useState(false)
+  const [allowed, setAllowed] = useState(false);
 
-  const [currentImage, setCurrentImage] = useState(task.Images.length ? task.Images[0].title : null)
+  const [currentImage, setCurrentImage] = useState(
+    task.Images.length ? task.Images[0].title : null
+  );
 
   return (
-    <BaseContainer>
-      <Lightbox
-        modalVisible={lightboxVisible}
-        setModalVisible={setLightboxVisible}
-        task={task}
-      />
-      <StatusModal
-        modalVisible={statusModalVisible}
-        setModalVisible={setStatusModalVisible}
-        task={task}
-      />
-      <TitleModal
-        modalVisible={titleModalVisible}
-        setModalVisible={setTitleModalVisible}
-        task={task}
-      />
-      <ImageModal
-        modalVisible={imageModalVisible}
-        setModalVisible={setImageModalVisible}
-        task={task}
-        setCurrentImage={setCurrentImage}
-        setAllowed={setAllowed}
-      />
-      <View style={styles.imagePlaceholder}  >
-
-        {currentImage ?
-          <Pressable onPress={() => setLightboxVisible(true)}>
-            <Image style={styles.image} source={{ uri: `http://${HOST}:5000/${currentImage}` }} ></Image>
-          </Pressable>
-          :
-          <Image
-            style={styles.image}
-            source={require("../../assets/houses.png")}
-          />
-        }
-      </View>
-      <BaseFlexRow>
-        <BaseCard
-          iconName="tasks"
-          text={task.title}
-          borderColor={Color.blue}
-          onPress={() => {
-            setTitleModalVisible(true);
-          }}
-        ></BaseCard>
-        <BaseCard
-          iconName={task.done ? "check-circle" : "spinner"}
-          text={task.done ? "Done" : "Incomplete"}
-          borderColor={task.done ? Color.pelleGreen : Color.red}
-          onPress={() => {
-            setStatusModalVisible(true);
-          }}
-        ></BaseCard>
-      </BaseFlexRow>
-      <BaseFlexRow>
-        <BaseCard
-          iconName="camera"
-          text="Add image"
-          borderColor={Color.pink}
-          onPress={() => {
-            allowed ? setImageModalVisible(true) : Alert.alert('You need to allow access to your images')
-          }}
-        ></BaseCard>
-        <BaseCard
-          iconName="user"
-          text="See client info"
-          borderColor={Color.orange}
-          onPress={() => {
-            navigation.navigate("SingleUser", {
-              userId: task.clientId,
-            });
-          }}
-        ></BaseCard>
-      </BaseFlexRow>
-    </BaseContainer>
+    <>
+      <BaseContainer>
+        <StatusModal
+          modalVisible={statusModalVisible}
+          setModalVisible={setStatusModalVisible}
+          task={task}
+        />
+        <TitleModal
+          modalVisible={titleModalVisible}
+          setModalVisible={setTitleModalVisible}
+          task={task}
+        />
+        <ImageModal
+          modalVisible={imageModalVisible}
+          setModalVisible={setImageModalVisible}
+          task={task}
+          setCurrentImage={setCurrentImage}
+          setAllowed={setAllowed}
+        />
+        <View style={styles.imagePlaceholder}>
+          {currentImage ? (
+            <Pressable onPress={() => setLightboxVisible(true)}>
+              <Image
+                style={styles.image}
+                source={{ uri: `http://${HOST}:5000/${currentImage}` }}
+              ></Image>
+            </Pressable>
+          ) : (
+            <Image
+              style={styles.placeholderImage}
+              source={require("../../assets/houses.png")}
+            />
+          )}
+        </View>
+        <BaseFlexRow>
+          <BaseCard
+            iconName="tasks"
+            text={task.title}
+            borderColor={Color.blue}
+            onPress={() => {
+              setTitleModalVisible(true);
+            }}
+          ></BaseCard>
+          <BaseCard
+            iconName={task.done ? "check-circle" : "spinner"}
+            text={task.done ? "Done" : "Incomplete"}
+            borderColor={task.done ? Color.pelleGreen : Color.red}
+            onPress={() => {
+              setStatusModalVisible(true);
+            }}
+          ></BaseCard>
+        </BaseFlexRow>
+        <BaseFlexRow>
+          <BaseCard
+            iconName="camera"
+            text="Add image"
+            borderColor={Color.pink}
+            onPress={() => {
+              allowed
+                ? setImageModalVisible(true)
+                : Alert.alert("You need to allow access to your images");
+            }}
+          ></BaseCard>
+          <BaseCard
+            iconName="user"
+            text="See client info"
+            borderColor={Color.orange}
+            onPress={() => {
+              navigation.navigate("SingleUser", {
+                userId: task.clientId,
+              });
+            }}
+          ></BaseCard>
+        </BaseFlexRow>
+      </BaseContainer>
+      {lightboxVisible && (
+        <LightboxView setModalVisible={setLightboxVisible} task={task} worker />
+      )}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   imagePlaceholder: {
-    width: "90%",
+    width: "85%",
     height: 160,
     backgroundColor: Color.secondaryDark,
     alignSelf: "center",
@@ -117,11 +123,17 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 5,
+    justifyContent: "center",
   },
   image: {
     borderRadius: 10,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
+  },
+  placeholderImage: {
+    width: "100%",
+    height: "80%",
+    alignSelf: "center",
   },
 });
 
