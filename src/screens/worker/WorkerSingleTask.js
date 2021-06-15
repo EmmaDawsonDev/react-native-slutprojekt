@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     height: 160,
     backgroundColor: Color.secondaryDark,
     alignSelf: "center",
-    marginBottom: 20,
+    marginVertical: 20,
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },

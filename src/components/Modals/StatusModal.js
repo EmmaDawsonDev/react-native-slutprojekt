@@ -42,7 +42,7 @@ const StatusModal = ({ modalVisible, setModalVisible, task }) => {
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
-                onPress={handleStatusChange} // Anropa API och ändra status
+                onPress={handleStatusChange}
               >
                 <Text style={styles.textStyle}>Yes</Text>
               </Pressable>
@@ -65,11 +65,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 0,
     backgroundColor: Color.primaryDark,
   },
   modalView: {
     margin: 20,
+
     backgroundColor: Color.secondaryDark,
     borderRadius: 20,
     padding: 60,

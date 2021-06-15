@@ -6,7 +6,6 @@ import {
   Image,
   Pressable,
   StyleSheet,
-  StatusBar,
   Dimensions,
 } from "react-native";
 import { addImage } from "../../api";
@@ -40,7 +39,7 @@ const AddImageModal = ({
     const result = await ImagePicker.launchImageLibraryAsync({});
     if (!result.cancelled) {
       setImage(result);
-    } // Gör så att add image knappen är disabled om status == denied
+    }
   };
 
   const openCamera = async () => {
@@ -79,7 +78,6 @@ const AddImageModal = ({
 
   return (
     <View style={styles.centeredView}>
-      <StatusBar barStyle="light-content" />
       <Modal
         animationType="slide"
         transparent={false}

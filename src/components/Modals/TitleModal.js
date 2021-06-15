@@ -1,15 +1,22 @@
 import React, { useContext, useState } from "react";
-import { View, Modal, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Modal,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { updateTask } from "../../api";
 import Color from "../../constants/color";
 import TaskContext from "../../store/WorkerTasksContext";
 
 const TitleModal = ({ modalVisible, setModalVisible, task }) => {
   const { tasks, setTasks } = useContext(TaskContext);
-  const [title, setTitle] = useState(task.title)
+  const [title, setTitle] = useState(task.title);
 
   const handleTitleChange = async () => {
-    if (!title.length) return
+    if (!title.length) return;
 
     const success = await updateTask(task.id, { title });
 
@@ -35,14 +42,21 @@ const TitleModal = ({ modalVisible, setModalVisible, task }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              Enter new title
-            </Text>
-            <TextInput style={styles.input} value={title} onChangeText={text => setTitle(text)} />
+            <Text style={styles.modalText}>Enter new title</Text>
+            <TextInput
+              style={styles.input}
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+            />
             <View style={styles.buttonContainer}>
               <Pressable
-                style={[styles.button, { backgroundColor: title.length ? Color.blue : Color.inactive }]}
-                onPress={handleTitleChange} // Anropa API och ändra status
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: title.length ? Color.blue : Color.inactive,
+                  },
+                ]}
+                onPress={handleTitleChange}
               >
                 <Text style={styles.textStyle}>Submit</Text>
               </Pressable>
@@ -65,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+
     backgroundColor: Color.primaryDark,
   },
   modalView: {
@@ -88,7 +102,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 6,
     paddingLeft: 10,
-    width: 250
+    width: 250,
   },
   button: {
     borderRadius: 8,
@@ -105,7 +119,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 30
+    marginTop: 30,
   },
   textStyle: {
     color: "white",

@@ -6,7 +6,6 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
-  StatusBar,
 } from "react-native";
 import { addTask } from "../../api";
 import Color from "../../constants/color";
@@ -41,7 +40,6 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
 
   return (
     <View style={styles.centeredView}>
-      <StatusBar barStyle="light-content" />
       <Modal
         animationType="slide"
         transparent={false}
@@ -72,7 +70,7 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
-                onPress={addTaskHandler} // Anropa API och ändra status
+                onPress={addTaskHandler}
               >
                 <Text style={styles.textStyle}>Add task</Text>
               </Pressable>
