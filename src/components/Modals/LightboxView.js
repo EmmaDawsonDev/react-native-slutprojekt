@@ -80,9 +80,10 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
           setCurrentIndex(0);
         }
         translateX.setValue(500);
-        Animated.timing(translateX, {
+        Animated.spring(translateX, {
           toValue: 0,
           duration: 200,
+          bounciness: 1,
           useNativeDriver: true,
         }).start();
       } else if (event.nativeEvent.translationX > 200) {
@@ -92,9 +93,10 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
           setCurrentIndex(task.Images.length - 1);
         }
         translateX.setValue(-500);
-        Animated.timing(translateX, {
+        Animated.spring(translateX, {
           toValue: 0,
           duration: 200,
+          bounciness: 1,
           useNativeDriver: true,
         }).start();
       } else {
