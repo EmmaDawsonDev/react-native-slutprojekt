@@ -31,7 +31,7 @@ const TaskFilter = ({ setTasks }) => {
         }}
         value={search}
         style={styles.searchInput}
-        placeholder="Search name..."
+        placeholder="Search by client name..."
       />
       <RNPickerSelect
         style={{

@@ -46,7 +46,7 @@ const LoginScreen = (props) => {
               setEmail(text);
             }}
             value={email}
-            placeholder="This is the email"
+            placeholder="Email"
           />
         </View>
 
@@ -59,7 +59,7 @@ const LoginScreen = (props) => {
             setPassword(text);
           }}
           value={password}
-          placeholder="This is the password"
+          placeholder="Password"
         />
         {error && (
           <Text style={styles.errorMessage}>
