@@ -24,7 +24,6 @@ const StatusModal = ({ modalVisible, setModalVisible, task }) => {
       setModalVisible(!modalVisible);
     } else {
       setError(true);
-      console.log("Something went wrong with updating task");
     }
   };
 

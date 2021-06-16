@@ -7,7 +7,7 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import AuthContext from "../../store/AuthContext";
+
 import TaskContext from "../../store/WorkerTasksContext";
 import ListCard from "../../components/ListCard";
 import TaskFilter from "../../components/TaskFilter";
@@ -18,13 +18,8 @@ import AddTaskModal from "../../components/Modals/AddTaskModal";
 
 const WorkerTasksScreen = (props) => {
   const { tasks, setTasks, loadingTasks } = useContext(TaskContext);
-  const { isLoading } = useContext(AuthContext);
 
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
-
-  // useEffect(() => {
-
-  // },[tasks])
 
   const renderTask = ({ item }) => {
     return (

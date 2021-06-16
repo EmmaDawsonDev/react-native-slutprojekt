@@ -11,8 +11,6 @@ import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
-// const myIcon = <Icon name="rocket" size={30} color="#900" />;
-
 const LoginScreen = (props) => {
   const { signIn } = useContext(AuthContext);
 
@@ -20,7 +18,6 @@ const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [role, setRole] = useState("worker");
   const pressHandler = async () => {
     setError(false);
     const success = await signIn({ email, password });

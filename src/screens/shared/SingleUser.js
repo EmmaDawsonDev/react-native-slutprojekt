@@ -17,10 +17,6 @@ const SingleUser = ({ route, navigation }) => {
     })();
   }, []);
 
-  // useEffect(() => {
-
-  // }, [user]);
-
   return (
     <BaseContainer>
       {!user ? (

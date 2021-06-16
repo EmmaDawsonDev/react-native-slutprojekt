@@ -70,7 +70,7 @@ const ChangeCredentialsModal = ({
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
-                onPress={handleOnSubmit} // Anropa API och ändra status
+                onPress={handleOnSubmit}
               >
                 <Text style={styles.textStyle}>Submit</Text>
               </Pressable>

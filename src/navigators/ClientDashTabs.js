@@ -20,7 +20,6 @@ function ClientDashTabs() {
             iconName = "user";
           }
 
-          // You can return any component that you like here!
           return <Icon name={iconName} size={28} color={color} />;
         },
       })}

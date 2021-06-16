@@ -23,7 +23,7 @@ const BaseCard = ({ iconName, text, borderColor, onPress }) => {
       elevation: 5,
 
       borderBottomWidth: 10,
-      borderBottomColor: borderColor, // from props
+      borderBottomColor: borderColor,
     },
     cardText: {
       color: "white",

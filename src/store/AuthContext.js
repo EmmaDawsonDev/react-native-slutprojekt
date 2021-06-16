@@ -24,7 +24,6 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  // skapar ett state-objekt och mutations för state (som anropas med dispatch)
   const [authState, authDispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -71,13 +70,12 @@ export const AuthContextProvider = (props) => {
   }, []);
 
   const signIn = async (data) => {
-    // 1. skicka email och password till backend
     const user = await login(data);
     if (!user || user.role === "admin") {
       return false;
     }
     await saveUser(JSON.stringify(user));
-    // 2. Få tillbaka token och logga in:
+
     authDispatch({
       type: "SIGN_IN",
       user: user,
