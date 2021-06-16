@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Keyboard,
   StyleSheet,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
@@ -21,6 +22,7 @@ const TaskFilter = ({ setTasks }) => {
     } else {
       setTasks(tasks.tasks);
     }
+    Keyboard.dismiss();
   };
 
   return (
