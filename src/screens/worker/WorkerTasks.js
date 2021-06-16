@@ -1,5 +1,12 @@
 import React, { useContext, useState } from "react";
-import { TouchableOpacity, FlatList, Text, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  FlatList,
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import AuthContext from "../../store/AuthContext";
 import TaskContext from "../../store/WorkerTasksContext";
 import ListCard from "../../components/ListCard";
@@ -10,7 +17,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import AddTaskModal from "../../components/Modals/AddTaskModal";
 
 const WorkerTasksScreen = (props) => {
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { tasks, setTasks, loadingTasks } = useContext(TaskContext);
   const { isLoading } = useContext(AuthContext);
 
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
@@ -44,8 +51,10 @@ const WorkerTasksScreen = (props) => {
         setModalVisible={setAddTaskModalVisible}
       />
       <TaskFilter setTasks={handleFilterTasks} />
-      {isLoading ? (
-        <Text>LOADING...</Text>
+      {loadingTasks ? (
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color={Color.blue} />
+        </View>
       ) : tasks.length ? (
         <FlatList
           keyExtractor={(task) => String(task.id)}
@@ -92,6 +101,12 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 5,
+  },
+  preloader: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Color.primaryDark,
   },
 });
 
