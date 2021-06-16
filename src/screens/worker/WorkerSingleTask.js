@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Pressable, StyleSheet, Image, Alert } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
@@ -23,6 +23,10 @@ const WorkerSingleTask = ({ route, navigation }) => {
   const [currentImage, setCurrentImage] = useState(
     task.Images.length ? task.Images[0].title : null
   );
+
+  useEffect(() => {
+    navigation.setOptions({ title: task.title });
+  }, [task]);
 
   return (
     <>

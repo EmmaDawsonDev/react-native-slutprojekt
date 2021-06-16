@@ -24,11 +24,11 @@ const WorkerTasksScreen = (props) => {
       <ListCard
         task={item}
         iconName="caret-right"
-        onPress={() =>
+        onPress={() => {
           props.navigation.navigate("WorkerSingleTask", {
             task: item,
-          })
-        }
+          });
+        }}
       />
     );
   };

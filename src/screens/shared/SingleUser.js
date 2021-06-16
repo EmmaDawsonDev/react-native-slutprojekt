@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import BaseContainer from "../../components/BaseComponents/BaseContainer"
-import ListCard from '../../components/ListCard'
+import BaseContainer from "../../components/BaseComponents/BaseContainer";
+import ListCard from "../../components/ListCard";
 import Color from "../../constants/color";
-import { getUserById } from '../../api'
+import { getUserById } from "../../api";
 
-const SingleUser = ({ route }) => {
-  const [user, setUser] = useState(null)
+const SingleUser = ({ route, navigation }) => {
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const responseUser = await getUserById(route.params.userId)
-      setUser(responseUser)
-    })()
-  }, [])
+      const responseUser = await getUserById(route.params.userId);
+      setUser(responseUser);
+      navigation.setOptions({ title: responseUser.name });
+    })();
+  }, []);
+
+  // useEffect(() => {
+
+  // }, [user]);
 
   return (
     <BaseContainer>
@@ -35,7 +40,7 @@ const SingleUser = ({ route }) => {
 
 const styles = StyleSheet.create({
   loadingMessage: {
-    color: 'white'
+    color: "white",
   },
   circle: {
     justifyContent: "center",
@@ -51,9 +56,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignSelf: "center",
     marginBottom: 30,
-  }
-})
-
-
+  },
+});
 
 export default SingleUser;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image, Pressable, Alert } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
@@ -13,6 +13,10 @@ const ClientSingleTask = ({ route, navigation }) => {
   const uri = task.Images.length
     ? `http://${HOST}:5000/${task.Images[0].title}`
     : null;
+
+  useEffect(() => {
+    navigation.setOptions({ title: task.title });
+  }, [task]);
 
   return (
     <>

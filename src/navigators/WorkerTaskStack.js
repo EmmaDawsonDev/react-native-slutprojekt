@@ -15,7 +15,11 @@ const WorkerTaskStack = () => {
         screenOptions={{ headerStyle: { backgroundColor: Color.grey } }}
         initialRouteName="WorkerTasks"
       >
-        <Stack.Screen name="WorkerTasks" component={WorkerTasks} />
+        <Stack.Screen
+          name="WorkerTasks"
+          component={WorkerTasks}
+          options={{ title: "My Tasks" }}
+        />
         <Stack.Screen name="WorkerSingleTask" component={WorkerSingleTask} />
         <Stack.Screen name="SingleUser" component={SingleUser} />
       </Stack.Navigator>
