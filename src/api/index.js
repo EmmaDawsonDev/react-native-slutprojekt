@@ -158,3 +158,18 @@ export const addImage = async (id, formData) => {
     return false;
   }
 };
+
+export const deleteImage = async (id) => {
+  try {
+    const response = await API.delete(`/images/${id}`);
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

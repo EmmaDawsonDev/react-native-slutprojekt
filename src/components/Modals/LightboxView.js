@@ -1,31 +1,42 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   View,
   Text,
   Animated,
   Dimensions,
-  Image,
   Platform,
   Pressable,
   StyleSheet,
+  Alert,
 } from "react-native";
 import {
   PanGestureHandler,
   PinchGestureHandler,
   State,
 } from "react-native-gesture-handler";
+import { deleteImage } from "../../api";
 import { HOST } from "../../host.json";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { getTasks } from "../../api";
+import TaskContext from "../../store/WorkerTasksContext";
 
-const Lightbox = ({ setModalVisible, task, worker }) => {
+const Lightbox = ({ setModalVisible, taskId, setCurrentImage, worker }) => {
   const imageSize = Dimensions.get("window").width * 0.85;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
 
+  const [taskImages, setTaskImages] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
   const [uri, setUri] = useState(
-    task.Images.length ? `http://${HOST}:5000/${task.Images[0].title}` : null
+    taskImages.length ? `http://${HOST}:5000/${taskImages[0].title}` : null
   );
+
+  const { tasks, setTasks } = useContext(TaskContext);
+
+  useEffect(() => {
+    let task = tasks.find((item) => item.id === taskId);
+    setTaskImages([...task.Images]);
+  }, [tasks]);
 
   let translateX = useRef(new Animated.Value(500)).current;
 
@@ -59,9 +70,9 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
   };
 
   useEffect(() => {
-    task.Images.length &&
-      setUri(`http://${HOST}:5000/${task.Images[currentIndex].title}`);
-  }, [currentIndex]);
+    taskImages.length &&
+      setUri(`http://${HOST}:5000/${taskImages[currentIndex].title}`);
+  }, [taskImages, currentIndex]);
 
   useEffect(() => {
     Animated.spring(translateX, {
@@ -74,7 +85,7 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
   const handleStateChange = (event) => {
     if (event.nativeEvent.oldState == State.ACTIVE) {
       if (event.nativeEvent.translationX < -200) {
-        if (currentIndex < task.Images.length - 1) {
+        if (currentIndex < taskImages.length - 1) {
           setCurrentIndex((prevState) => prevState + 1);
         } else {
           setCurrentIndex(0);
@@ -90,7 +101,7 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
         if (currentIndex > 0) {
           setCurrentIndex((prevState) => prevState - 1);
         } else {
-          setCurrentIndex(task.Images.length - 1);
+          setCurrentIndex(taskImages.length - 1);
         }
         translateX.setValue(-500);
         Animated.spring(translateX, {
@@ -109,6 +120,30 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
     }
   };
 
+  const deleteImageHandler = () => {
+    Alert.alert("Delete image", "Are you sure?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          const success = await deleteImage(taskImages[currentIndex].id);
+          if (success) {
+            const response = await getTasks();
+            setTasks(() => [...response.tasks]);
+            if (taskImages.length > 1) {
+              setCurrentIndex(0);
+            } else {
+              onCloseHandler();
+            }
+          }
+        },
+      },
+    ]);
+  };
+
   const onCloseHandler = () => {
     setCurrentIndex(0);
     setModalVisible(false);
@@ -122,17 +157,20 @@ const Lightbox = ({ setModalVisible, task, worker }) => {
           onHandlerStateChange={handleStateChange}
         >
           <Animated.View
-            style={{ position: "relative", transform: [{ translateX }] }}
+            style={[
+              styles.imageContainer,
+              { position: "relative", transform: [{ translateX }] },
+            ]}
           >
             {worker && isVisible && (
-              <View style={styles.deleteBtn}>
+              <Pressable style={styles.deleteBtn} onPress={deleteImageHandler}>
                 <Icon
                   style={styles.icon}
                   name="trash-alt"
                   size={20}
                   color="black"
                 />
-              </View>
+              </Pressable>
             )}
             <PinchGestureHandler
               onGestureEvent={onPinchGestureEvent}
@@ -223,8 +261,18 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: 250,
     marginHorizontal: 10,
+    borderRadius: 10,
   },
-  icon: {},
+  imageContainer: {
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+
+    // Works only on Android
+    elevation: 5,
+  },
   deleteBtn: {
     backgroundColor: "rgba(255,255,255,0.7)",
     height: 40,

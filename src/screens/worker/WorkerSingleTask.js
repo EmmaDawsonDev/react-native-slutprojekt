@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Pressable, StyleSheet, Image, Alert } from "react-native";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import BaseFlexRow from "../../components/BaseComponents/BaseFlexRow";
@@ -8,11 +8,17 @@ import StatusModal from "../../components/Modals/StatusModal";
 import TitleModal from "../../components/Modals/TitleModal";
 import ImageModal from "../../components/Modals/AddImageModal";
 import LightboxView from "../../components/Modals/LightboxView";
+import TaskContext from "../../store/WorkerTasksContext";
 
 import { HOST } from "../../host.json";
 
 const WorkerSingleTask = ({ route, navigation }) => {
-  let task = route.params.task;
+  let taskId = route.params.task.id;
+  const { tasks, setTasks } = useContext(TaskContext);
+  let task = tasks.find((item) => item.id === taskId);
+  useEffect(() => {
+    task = tasks.find((item) => item.id === taskId);
+  }, [tasks]);
 
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [titleModalVisible, setTitleModalVisible] = useState(false);
@@ -23,6 +29,14 @@ const WorkerSingleTask = ({ route, navigation }) => {
   const [currentImage, setCurrentImage] = useState(
     task.Images.length ? task.Images[0].title : null
   );
+
+  useEffect(() => {
+    if (task.Images.length) {
+      setCurrentImage(task.Images[0].title);
+    } else {
+      setCurrentImage(null);
+    }
+  }, [task.Images]);
 
   useEffect(() => {
     navigation.setOptions({ title: task.title });
@@ -106,7 +120,12 @@ const WorkerSingleTask = ({ route, navigation }) => {
         </BaseFlexRow>
       </BaseContainer>
       {lightboxVisible && (
-        <LightboxView setModalVisible={setLightboxVisible} task={task} worker />
+        <LightboxView
+          setModalVisible={setLightboxVisible}
+          taskId={task.id}
+          setCurrentImage={setCurrentImage}
+          worker
+        />
       )}
     </>
   );

@@ -66,7 +66,7 @@ const AddImageModal = ({
 
     const response = await addImage(task.id, formData);
     setCurrentImage(response.image);
-    setTasks(response.tasks);
+    setTasks([...response.tasks]);
     setImage(null);
     setModalVisible(false);
   };

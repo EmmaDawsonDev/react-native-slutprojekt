@@ -14,7 +14,7 @@ export const TasksContextProvider = (props) => {
   useEffect(() => {
     (async () => {
       const response = await getTasks();
-      setTasks(response.tasks);
+      setTasks([...response.tasks]);
       setLoadingTasks(false);
     })();
   }, []);

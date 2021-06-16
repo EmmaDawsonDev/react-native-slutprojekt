@@ -10,6 +10,7 @@ import { HOST } from "../../host.json";
 const ClientSingleTask = ({ route, navigation }) => {
   const [lightboxVisible, setLightboxVisible] = useState(false);
   const task = route.params.task;
+  const taskId = route.params.task.id;
   const uri = task.Images.length
     ? `http://${HOST}:5000/${task.Images[0].title}`
     : null;
@@ -82,7 +83,7 @@ const ClientSingleTask = ({ route, navigation }) => {
         </BaseFlexRow>
       </BaseContainer>
       {lightboxVisible && (
-        <LightboxView setModalVisible={setLightboxVisible} task={task} />
+        <LightboxView setModalVisible={setLightboxVisible} taskId={taskId} />
       )}
     </>
   );
