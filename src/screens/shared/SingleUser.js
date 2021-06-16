@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import BaseContainer from "../../components/BaseComponents/BaseContainer";
 import ListCard from "../../components/ListCard";
@@ -24,7 +24,9 @@ const SingleUser = ({ route, navigation }) => {
   return (
     <BaseContainer>
       {!user ? (
-        <Text style={styles.loadingMessage}>Loading...</Text>
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color={Color.blue} />
+        </View>
       ) : (
         <View>
           <View style={styles.circle}>

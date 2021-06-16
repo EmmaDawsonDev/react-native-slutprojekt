@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
 
 import { getUsers } from "../../api";
 import ListCard from "../../components/ListCard";
@@ -9,11 +15,13 @@ import BaseContainer from "../../components/BaseComponents/BaseContainer";
 
 const UsersScreen = (props) => {
   const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
 
   useEffect(() => {
     (async () => {
       const response = await getUsers();
       setUsers(response);
+      setLoadingUsers(false);
     })();
   }, []);
 
@@ -36,7 +44,11 @@ const UsersScreen = (props) => {
   return (
     <BaseContainer>
       <UserFilter setUsers={handleFilterUsers} />
-      {users.length ? (
+      {loadingUsers ? (
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color={Color.blue} />
+        </View>
+      ) : users.length ? (
         <FlatList
           keyExtractor={(user) => String(user.id)}
           data={users}
@@ -56,6 +68,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: "auto",
+  },
+  preloader: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Color.primaryDark,
   },
 });
 
