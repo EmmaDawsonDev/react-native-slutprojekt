@@ -46,10 +46,6 @@ const WorkerTasksScreen = (props) => {
 
   return (
     <BaseContainer>
-      <AddTaskModal
-        modalVisible={addTaskModalVisible}
-        setModalVisible={setAddTaskModalVisible}
-      />
       <TaskFilter setTasks={handleFilterTasks} />
       {loadingTasks ? (
         <View style={styles.preloader}>
@@ -72,6 +68,10 @@ const WorkerTasksScreen = (props) => {
       >
         <Icon name="plus" size={28} color="white" />
       </TouchableOpacity>
+      <AddTaskModal
+        modalVisible={addTaskModalVisible}
+        setModalVisible={setAddTaskModalVisible}
+      />
     </BaseContainer>
   );
 };
