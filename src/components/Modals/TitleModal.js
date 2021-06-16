@@ -11,11 +11,13 @@ import { updateTask } from "../../api";
 import Color from "../../constants/color";
 import TaskContext from "../../store/WorkerTasksContext";
 
-const TitleModal = ({ modalVisible, setModalVisible, task }) => {
+const TitleModal = ({ modalVisible, setModalVisible, task, navigation }) => {
   const { tasks, setTasks } = useContext(TaskContext);
   const [title, setTitle] = useState(task.title);
+  const [error, setError] = useState(false);
 
   const handleTitleChange = async () => {
+    setError(false);
     if (!title.length) return;
 
     const success = await updateTask(task.id, { title });
@@ -24,8 +26,9 @@ const TitleModal = ({ modalVisible, setModalVisible, task }) => {
       task.title = title;
       setTasks(tasks);
       setModalVisible(!modalVisible);
+      navigation.setOptions({ title: task.title });
     } else {
-      console.log("Something went wrong with updating task"); // Skapa ett felmeddelande
+      setError(true);
     }
   };
 
@@ -48,6 +51,12 @@ const TitleModal = ({ modalVisible, setModalVisible, task }) => {
               value={title}
               onChangeText={(text) => setTitle(text)}
             />
+
+            {error && (
+              <Text style={styles.errorMessage}>
+                Something went wrong. Please try again
+              </Text>
+            )}
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[
@@ -62,7 +71,10 @@ const TitleModal = ({ modalVisible, setModalVisible, task }) => {
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonCancel]}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => {
+                  setError(false);
+                  setModalVisible(!modalVisible);
+                }}
               >
                 <Text style={styles.textStyle}>Cancel</Text>
               </Pressable>
@@ -131,6 +143,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 20,
+  },
+  errorMessage: {
+    color: Color.orange,
+    marginVertical: 5,
+    fontWeight: "bold",
   },
 });
 

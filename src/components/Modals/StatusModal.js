@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { View, Modal, Text, Pressable, StyleSheet } from "react-native";
 import { updateTask } from "../../api";
 import Color from "../../constants/color";
@@ -6,7 +6,11 @@ import TaskContext from "../../store/WorkerTasksContext";
 
 const StatusModal = ({ modalVisible, setModalVisible, task }) => {
   const { tasks, setTasks } = useContext(TaskContext);
+
+  const [error, setError] = useState(false);
+
   const handleStatusChange = async () => {
+    setError(false);
     let status;
     if (task.done) {
       status = "false";
@@ -19,7 +23,8 @@ const StatusModal = ({ modalVisible, setModalVisible, task }) => {
       setTasks(tasks);
       setModalVisible(!modalVisible);
     } else {
-      console.log("Something went wrong with updating task"); // Skapa ett felmeddelande
+      setError(true);
+      console.log("Something went wrong with updating task");
     }
   };
 
@@ -39,6 +44,12 @@ const StatusModal = ({ modalVisible, setModalVisible, task }) => {
             <Text style={styles.modalText}>
               Set status to {task.done ? "incomplete?" : "done?"}
             </Text>
+
+            {error && (
+              <Text style={styles.errorMessage}>
+                Something went wrong. Please try again
+              </Text>
+            )}
             <View style={styles.buttonContainer}>
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
@@ -48,7 +59,10 @@ const StatusModal = ({ modalVisible, setModalVisible, task }) => {
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonCancel]}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => {
+                  setError(false);
+                  setModalVisible(!modalVisible);
+                }}
               >
                 <Text style={styles.textStyle}>Cancel</Text>
               </Pressable>
@@ -113,6 +127,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 20,
+  },
+  errorMessage: {
+    color: Color.orange,
+    marginVertical: 5,
+    fontWeight: "bold",
   },
 });
 

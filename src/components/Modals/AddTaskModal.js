@@ -16,8 +16,10 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
 
   const [taskTitle, setTaskTitle] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
 
   const addTaskHandler = async () => {
+    setError(false);
     if (!taskTitle.length || !email.length) {
       return;
     }
@@ -28,13 +30,14 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
       setTasks(updatedTasks.tasks);
       setModalVisible(!modalVisible);
     } else {
-      console.log("Something went wrong"); // Add error handling here
+      setError(true);
     }
   };
 
   const clearAndCloseHandler = () => {
     setEmail("");
     setTaskTitle("");
+    setError(false);
     setModalVisible(!modalVisible);
   };
 
@@ -66,6 +69,12 @@ const AddTaskModal = ({ modalVisible, setModalVisible }) => {
               value={email}
               keyboardType="email-address"
             />
+
+            {error && (
+              <Text style={styles.errorMessage}>
+                Something went wrong. Please try again
+              </Text>
+            )}
 
             <View style={styles.buttonContainer}>
               <Pressable
@@ -150,6 +159,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     color: "white",
     fontSize: 16,
+  },
+  errorMessage: {
+    color: Color.orange,
+    marginVertical: 5,
+    fontWeight: "bold",
   },
 });
 

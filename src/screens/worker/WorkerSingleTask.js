@@ -40,6 +40,7 @@ const WorkerSingleTask = ({ route, navigation }) => {
           modalVisible={titleModalVisible}
           setModalVisible={setTitleModalVisible}
           task={task}
+          navigation={navigation}
         />
         <ImageModal
           modalVisible={imageModalVisible}
